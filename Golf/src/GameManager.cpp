@@ -1,4 +1,5 @@
-#include "GameManager.h" 
+#include "GameManager.h"
+#include "gameWorld.h" 
 #include <iostream> 
 #include <algorithm>
 #include <stdexcept>
@@ -49,6 +50,8 @@ GameManager::GameManager()
         Mix_PlayMusic(musicTable, -1);
         std::cout << "Música carregada e tocando...\n";
     }
+
+    GameManager::Initialize();
 }
 
 void GameManager::Run() {
@@ -59,11 +62,17 @@ void GameManager::Run() {
                 running = false;
             }
         }
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
+        gameWorld->Update();
+        gameWorld->Render();
     }
+}
+
+GameManager::Initialize() {
+    std::cout << "Inicializando o GameWorld...\n";
+
+    
+    gameWorld = std::make_unique<GameWorld>(renderer);
+    gameWorld->Initialize();
 }
 
 GameManager::~GameManager()
