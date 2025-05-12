@@ -62,19 +62,19 @@ void GameManager::Run() {
                 running = false;
             }
             if (event.type == SDL_KEYDOWN) {
-            switch (event.key.keysym.sym) {
-                case SDLK_ESCAPE:
-                    running = false;
-                    break;
-                case SDLK_SPACE:
-                    Mix_PlayChannel(-1, strokeSound, 0);
-                    break;
-                case SDLK_RETURN:
-                    Mix_PlayChannel(-1, holeSound, 0);
-                    break;
-                default:
-                    break;
-            }
+                switch (event.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        running = false;
+                        break;
+                    case SDLK_SPACE:
+                        Mix_PlayChannel(-1, strokeSound, 0);
+                        break;
+                    case SDLK_RETURN:
+                        Mix_PlayChannel(-1, holeSound, 0);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         

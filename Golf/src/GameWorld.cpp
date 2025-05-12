@@ -1,6 +1,7 @@
 #include "GameWorld.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL2_gfxPrimitives.h>
+#include <iostream>
 
 
 const SDL_Color BACKGROUND_COLOR = {77, 255, 77, 255};
@@ -39,11 +40,15 @@ void GameWorld::Render()
     SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
     SDL_RenderClear(renderer);
     
+    
     for (auto& object : objects) {
         object->Render(renderer);
     }
+    filledCircleColor(renderer, 0, 0, 200, 0x0000FFFF);
 
-    filledCircleColor(renderer, 400, 400, 40, 0x0000FFFF); // Azul
+    filledCircleColor(renderer, 100, 100, 40, 0x0000FFFF); // Azul
+    std::cout << "Desenhando círculo azul na posição (100, 100) com raio 40\n";
+    filledCircleColor(renderer, 200, 200, 40, 0x00FF00FF); // Verde
 
     SDL_RenderPresent(renderer);
     static Uint32 previousTime = SDL_GetTicks();
