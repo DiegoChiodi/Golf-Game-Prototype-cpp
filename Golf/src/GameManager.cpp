@@ -1,5 +1,4 @@
 #include "GameManager.h"
-#include "gameWorld.h" 
 #include <iostream> 
 #include <algorithm>
 #include <stdexcept>
@@ -9,7 +8,7 @@ const int widthJan = 800;
 const int heightJan = 600;
 
 GameManager::GameManager()
-    : window(nullptr), renderer(nullptr), musicTable(nullptr), stroke(nullptr), hole(nullptr), running(true)
+    : window(nullptr), renderer(nullptr), musicTable(nullptr), strokeSound(nullptr), holeSound(nullptr), running(true)
 {
     std::cout << "Inicializando o GameManager...\n";
 
@@ -36,13 +35,13 @@ GameManager::GameManager()
         std::cerr << "Erro ao carregar música: " << Mix_GetError() << std::endl;
     }
 
-    stroke = Mix_LoadWAV("assets/effect/stroke.mp3");
-    if (!stroke) {
+    strokeSound = Mix_LoadWAV("assets/effect/stroke.mp3");
+    if (!strokeSound) {
         std::cerr << "Erro ao carregar efeito sonoro 'stroke': " << Mix_GetError() << std::endl;
     }
 
-    hole = Mix_LoadWAV("assets/effect/hole.mp3");
-    if (!hole) {
+    holeSound = Mix_LoadWAV("assets/effect/hole.mp3");
+    if (!holeSound) {
         std::cerr << "Erro ao carregar efeito sonoro 'hole': " << Mix_GetError() << std::endl;
     }
 
@@ -57,30 +56,42 @@ GameManager::GameManager()
 void GameManager::Run() {
     SDL_Event event;
     while (running) {
+        gameWorld->Run();
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
             }
+            if (event.type == SDL_KEYDOWN) {
+            switch (event.key.keysym.sym) {
+                case SDLK_ESCAPE:
+                    running = false;
+                    break;
+                case SDLK_SPACE:
+                    Mix_PlayChannel(-1, strokeSound, 0);
+                    break;
+                case SDLK_RETURN:
+                    Mix_PlayChannel(-1, holeSound, 0);
+                    break;
+                default:
+                    break;
+            }
+            }
         }
-        gameWorld->Update();
-        gameWorld->Render();
+        
     }
 }
 
-GameManager::Initialize() {
+void GameManager::Initialize() {
     std::cout << "Inicializando o GameWorld...\n";
-
-    
     gameWorld = std::make_unique<GameWorld>(renderer);
-    gameWorld->Initialize();
 }
 
 GameManager::~GameManager()
 {
     std::cout << "Finalizando o GameManager...\n";
 
-    if (stroke) Mix_FreeChunk(stroke);
-    if (hole) Mix_FreeChunk(hole);
+    if (strokeSound) Mix_FreeChunk(strokeSound);
+    if (holeSound) Mix_FreeChunk(holeSound);
     if (musicTable) Mix_FreeMusic(musicTable);
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);

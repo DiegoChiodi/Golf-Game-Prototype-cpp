@@ -9,6 +9,12 @@ enum class CollisionType {
     CIRCLE
 };
 
+struct vector {
+    float x, y;
+};
+
+using point = struct vector;
+
 class GameObject {
 protected:
     float x, y;
@@ -17,7 +23,7 @@ public:
     GameObject(float x, float y, CollisionType collisionType);
     virtual ~GameObject();
 
-    virtual void Update() = 0;
+    virtual void Run() = 0;
     virtual void Render(SDL_Renderer* renderer) = 0;
     virtual bool CheckCollision(GameObject* other) = 0;
 
