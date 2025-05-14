@@ -42,13 +42,10 @@ void GameWorld::Render()
     
     
     for (auto& object : objects) {
-        object->Render(renderer);
+        if (object->Render(renderer) == 0) {
+            std::cerr << "Returns 0 on success" << std::endl;
+        }
     }
-    filledCircleColor(renderer, 0, 0, 200, 0x0000FFFF);
-
-    filledCircleColor(renderer, 100, 100, 40, 0x0000FFFF); // Azul
-    std::cout << "Desenhando círculo azul na posição (100, 100) com raio 40\n";
-    filledCircleColor(renderer, 200, 200, 40, 0x00FF00FF); // Verde
 
     SDL_RenderPresent(renderer);
     static Uint32 previousTime = SDL_GetTicks();
