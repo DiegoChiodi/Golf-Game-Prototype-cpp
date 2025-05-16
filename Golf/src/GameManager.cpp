@@ -3,10 +3,6 @@
 #include <algorithm>
 #include <stdexcept>
 
-// Defina a resolução da janela
-const int widthJan = 800;
-const int heightJan = 600;
-
 GameManager::GameManager()
     : window(nullptr), renderer(nullptr), musicTable(nullptr), strokeSound(nullptr), holeSound(nullptr), running(true)
 {
@@ -20,10 +16,22 @@ GameManager::GameManager()
         throw std::runtime_error("Erro ao inicializar SDL_mixer: " + std::string(Mix_GetError()));
     }
 
+    SDL_DisplayMode displayMode;
+    if (SDL_GetCurrentDisplayMode(0, &displayMode) != 0) {
+        throw std::runtime_error("Erro ao obter resolução da tela: " + std::string(SDL_GetError()));
+    }
+    
+    const int widthJan = displayMode.w;
+    const int heightJan = displayMode.h;
+
     window = SDL_CreateWindow("Golf", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, widthJan, heightJan, SDL_WINDOW_SHOWN);
     if (!window) {
         throw std::runtime_error("Erro ao criar janela: " + std::string(SDL_GetError()));
     }
+
+    
+    std::cout << "Resolução da tela: " << widthJan << "x" << heightJan << std::endl;
+    std::cout << "Proporção: " << static_cast<float>(widthJan) / heightJan << std::endl;
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {

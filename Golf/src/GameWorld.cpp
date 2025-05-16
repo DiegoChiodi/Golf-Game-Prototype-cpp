@@ -9,10 +9,10 @@ const SDL_Color BACKGROUND_COLOR = {77, 255, 77, 255};
 GameWorld::GameWorld(SDL_Renderer* renderer)
     : renderer(renderer)
 {
-    std::unique_ptr<GameObject> circle = std::make_unique<Circle>
-    (100, 100, CollisionType::CIRCLE, SDL_Color{255, 0, 0, 255}, 50);
+    std::unique_ptr<GameObject> hold = std::make_unique<Circle>
+    (100, 100, CollisionType::CIRCLE, SDL_Color{0, 0, 0, 255}, 50);
 
-    objects.push_back(std::move(circle)); // Move o ponteiro para a lista
+    objects.push_back(std::move(hold)); // Move o ponteiro para a lista
 }
 
 GameWorld::~GameWorld()
@@ -42,9 +42,7 @@ void GameWorld::Render()
     
     
     for (auto& object : objects) {
-        if (object->Render(renderer) == 0) {
-            std::cerr << "Returns 0 on success" << std::endl;
-        }
+        object->Render(this->renderer);
     }
 
     SDL_RenderPresent(renderer);
