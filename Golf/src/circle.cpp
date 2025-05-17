@@ -12,7 +12,8 @@ void Circle::Render(SDL_Renderer* renderer) {
 void Circle::Run() {
 }
 
-bool Circle::CheckCollisionCircle(const CircleFormat& other) { //[(x2−x1)² + (y2−y1)²] <= (Raio1 + Raio2)
+bool Circle::CheckCollisionCircle(const CircleFormat& other) { 
+    //[(x2−x1)² + (y2−y1)²] <= (Raio1 + Raio2)
     float dx = other.x - this->x;
     float dy = other.y - this->y;
     float distanceSquared = dx * dx + dy * dy;

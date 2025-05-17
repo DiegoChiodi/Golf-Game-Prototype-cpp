@@ -22,10 +22,11 @@ GameManager::GameManager()
     int const heightJan = displayMode.h;
 
     window = SDL_CreateWindow("Golf", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, widthJan, heightJan, SDL_WINDOW_SHOWN);
+    
+
     if (!window) {
         throw std::runtime_error("Erro ao criar janela: " + std::string(SDL_GetError()));
     }
-
     
     std::cout << "Resolução da tela: " << widthJan << "x" << heightJan << std::endl;
     std::cout << "Proporção: " << static_cast<float>(widthJan) / heightJan << std::endl;
@@ -34,6 +35,8 @@ GameManager::GameManager()
     if (!renderer) {
         throw std::runtime_error("Erro ao criar renderizador: " + std::string(SDL_GetError()));
     }
+
+    SDL_RenderSetLogicalSize(this->renderer, 640, 360);
 
     musicTable = Mix_LoadMUS("assets/music/musicTable.mp3");
     if (!musicTable) {

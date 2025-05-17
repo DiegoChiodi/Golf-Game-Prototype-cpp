@@ -26,14 +26,13 @@ void GameWorld::Run()
     for (auto& object : objects) {
         object->Run();
 
-
         // Verifica colisões entre objetos
         for (auto& other : objects) {
             if (object != other) { // Não verificar colisão consigo mesmo
                 if (object->GetCollisionType() == CollisionType::CIRCLE && other->GetCollisionType() == CollisionType::CIRCLE) {
-                    Circle* circle1 = dynamic_cast<Circle*>(object.get());
-                    Circle* circle2 = dynamic_cast<Circle*>(other.get());
-                    if (circle1 && circle2) {
+                    Circle* circle1 = dynamic_cast<Circle*>(object.get()); //Se não for Circle ou derivado
+                    Circle* circle2 = dynamic_cast<Circle*>(other.get()); //Vai retornar nullptr
+                    if (circle1 && circle2) { //Se os dois
                         if (circle1->CheckCollisionCircle(circle2->GetFormat())) {
                             std::cout << "Colisão detectada entre objetos!" << std::endl;
                         }
