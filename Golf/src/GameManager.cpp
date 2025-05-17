@@ -18,8 +18,8 @@ GameManager::GameManager()
         throw std::runtime_error("Erro ao obter resolução da tela: " + std::string(SDL_GetError()));
     }
     
-    const int widthJan = displayMode.w;
-    const int heightJan = displayMode.h;
+    int const widthJan = displayMode.w;
+    int const heightJan = displayMode.h;
 
     window = SDL_CreateWindow("Golf", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, widthJan, heightJan, SDL_WINDOW_SHOWN);
     if (!window) {

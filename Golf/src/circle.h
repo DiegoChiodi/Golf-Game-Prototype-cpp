@@ -14,5 +14,6 @@ public:
     Circle(float x, float y, CollisionType collisionType, SDL_Color color, float r);
     void Render(SDL_Renderer* renderer) override;
     void Run() override;
-    bool CheckCollision(GameObject* other) override;
+    CircleFormat GetFormat() const { return format; }
+    bool CheckCollisionCircle(const CircleFormat& other);
 };

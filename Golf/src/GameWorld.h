@@ -1,11 +1,8 @@
 #pragma once
 
-#include <memory>
-#include <list>
 #include <iostream>
 
-#include "Circle.h"
-
+#include "Ball.h"
 
 class GameWorld {
 private:

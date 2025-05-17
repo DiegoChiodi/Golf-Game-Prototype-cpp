@@ -25,7 +25,6 @@ public:
 
     virtual void Run() = 0;
     virtual void Render(SDL_Renderer* renderer) = 0;
-    virtual bool CheckCollision(GameObject* other) = 0;
 
     float GetX() const { return x; }
     float GetY() const { return y; }
