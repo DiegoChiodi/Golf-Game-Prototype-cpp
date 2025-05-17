@@ -1,10 +1,8 @@
 #pragma once
+ 
+#include <algorithm>
+#include <stdexcept>
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_main.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include <memory>
 #include "GameWorld.h"
 
 class GameManager {

@@ -1,8 +1,4 @@
 #include "GameWorld.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include <iostream>
-
 
 const SDL_Color BACKGROUND_COLOR = {77, 255, 77, 255};
 
@@ -16,10 +12,6 @@ GameWorld::GameWorld(SDL_Renderer* renderer)
 }
 
 GameWorld::~GameWorld()
-{
-
-}
-void GameWorld::Initialize()
 {
 
 }

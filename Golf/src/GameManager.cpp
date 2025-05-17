@@ -1,7 +1,4 @@
 #include "GameManager.h"
-#include <iostream> 
-#include <algorithm>
-#include <stdexcept>
 
 GameManager::GameManager()
     : window(nullptr), renderer(nullptr), musicTable(nullptr), strokeSound(nullptr), holeSound(nullptr), running(true)

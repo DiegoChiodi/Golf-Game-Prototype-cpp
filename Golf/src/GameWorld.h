@@ -1,10 +1,9 @@
 #pragma once
 
-#include <SDL2/SDL.h>
 #include <memory>
 #include <list>
+#include <iostream>
 
-#include "GameObject.h"
 #include "Circle.h"
 
 
@@ -16,7 +15,6 @@ public:
     GameWorld(SDL_Renderer* renderer);
     ~GameWorld();
 
-    void Initialize();
     void Run();
     void Render();
     void Cleanup();
