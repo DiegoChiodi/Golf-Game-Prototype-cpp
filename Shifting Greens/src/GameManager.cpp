@@ -64,26 +64,29 @@ GameManager::GameManager()
 void GameManager::Run() {
     SDL_Event event;
     while (running) {
+
         gameWorld->Run();
+
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
             }
-            if (event.type == SDL_KEYDOWN) {
-                switch (event.key.keysym.sym) {
-                    case SDLK_ESCAPE:
-                        running = false;
-                        break;
-                    case SDLK_SPACE:
-                        Mix_PlayChannel(-1, strokeSound, 0);
-                        break;
-                    case SDLK_RETURN:
-                        Mix_PlayChannel(-1, holeSound, 0);
-                        break;
-                    default:
-                        break;
+                if (event.type == SDL_KEYDOWN) {
+                    switch (event.key.keysym.sym) {
+                        case SDLK_ESCAPE:
+                            running = false;
+                            break;
+                        case SDLK_SPACE:
+                            Mix_PlayChannel(-1, strokeSound, 0);
+                            break;
+                        case SDLK_RETURN:
+                            Mix_PlayChannel(-1, holeSound, 0);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
+            gameWorld->HandleEvents(event);
         }
         
     }

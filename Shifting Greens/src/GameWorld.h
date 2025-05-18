@@ -14,5 +14,5 @@ public:
 
     void Run();
     void Render();
-    void Cleanup();
+    void HandleEvents(SDL_Event& event);
 };
