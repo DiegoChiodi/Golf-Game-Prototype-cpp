@@ -10,7 +10,8 @@ public:
     Square(float x, float y, float width, float height, SDL_Color color);
     ~Square() override;
 
-    void Run() override;
+    void Run(float dt) override { /* Implementar lógica de atualização do quadrado */ }
+
     void Render(SDL_Renderer* renderer) override;
     bool CheckCollision(point otherPosition, float otherWidth, float otherHeight) const;
     float GetWidth() const { return width; }

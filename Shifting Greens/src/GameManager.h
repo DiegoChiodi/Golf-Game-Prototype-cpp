@@ -14,6 +14,8 @@ private:
     Mix_Chunk* holeSound;
     bool running;
     SDL_Event event;
+    float dt;
+    Uint32 previousTime;
     std::unique_ptr<GameWorld> gameWorld;
 public:
     GameManager();

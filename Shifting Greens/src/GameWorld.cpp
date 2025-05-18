@@ -22,12 +22,13 @@ GameWorld::~GameWorld()
 
 }
 
-void GameWorld::Run()
+void GameWorld::Run(float dt)
 {
+
     // Atualiza todos os objetos do jogo
     for (auto& object : objects) {
 
-        object->Run();
+        object->Run(dt);
 
         // Verifica colisões entre objetos
         for (auto& other : objects) {
@@ -37,7 +38,7 @@ void GameWorld::Run()
                 
                 if (square && square2) {
                     if (square->CheckCollision(square2->GetPosition(), square2->GetWidth(), square2->GetHeight())) {
-                        std::cout << "Colisão detectada entre quadrados!" << std::endl;
+
                     }
                 }            
             }
@@ -59,17 +60,9 @@ void GameWorld::Render()
     }
 
     SDL_RenderPresent(renderer);
-    static Uint32 previousTime = SDL_GetTicks();
-    Uint32 currentTime = SDL_GetTicks();
-    float dt = (currentTime - previousTime) / 1000.0f; // dt em segundos
-    previousTime = currentTime;
-
-    const Uint32 targetTime = 1000 / 60; // Target 60 FPS
-
-    if ((currentTime - previousTime) < targetTime) {
-        SDL_Delay(targetTime - (currentTime - previousTime));
-    }
-    std::cout << "dt: " << dt << std::endl;
+    
+    SDL_Delay(16); // Aproximadamente 60 FPS
+    
 }
 void GameWorld::HandleEvents(SDL_Event& event)
 {

@@ -18,7 +18,7 @@ public:
     GameObject(float x, float y, float width, float height);
     virtual ~GameObject();
 
-    virtual void Run() = 0;
+    virtual void Run(float dt) = 0;
     virtual void Render(SDL_Renderer* renderer) = 0;
 
     point GetPosition() const { return position; }

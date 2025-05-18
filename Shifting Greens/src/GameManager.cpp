@@ -65,7 +65,11 @@ void GameManager::Run() {
     SDL_Event event;
     while (running) {
 
-        gameWorld->Run();
+        Uint32 currentTime = SDL_GetTicks();
+        dt = (currentTime - previousTime) / 1000.0f; // dt em segundos
+        previousTime = currentTime;
+
+        gameWorld->Run(dt);
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -95,6 +99,8 @@ void GameManager::Run() {
 void GameManager::Initialize() {
     std::cout << "Inicializando o GameWorld...\n";
     gameWorld = std::make_unique<GameWorld>(renderer);
+    previousTime = SDL_GetTicks();
+    dt = 0.0f;
 }
 
 GameManager::~GameManager()

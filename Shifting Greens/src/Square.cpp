@@ -7,12 +7,6 @@ Square::Square(float x, float y, float width, float height, SDL_Color color)
 
 Square::~Square() {}
 
-void Square::Run() {
-    // Atualiza a posição do quadrado
-    rect.x = static_cast<int>(position.x);
-    rect.y = static_cast<int>(position.y);
-}
-
 void Square::Render(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(renderer, &rect);
