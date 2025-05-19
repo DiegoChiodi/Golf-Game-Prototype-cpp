@@ -11,7 +11,6 @@ GameWorld::GameWorld(SDL_Renderer* renderer)
     std::unique_ptr<GameObject> hold = std::make_unique<Square>
     (100, 100, 50, 50, SDL_Color{0, 0, 255, 255});
 
-
     objects.push_back(std::move(player)); // Move o ponteiro para a lista
     objects.push_back(std::move(hold)); // Move o ponteiro para a lista
 
@@ -35,7 +34,7 @@ void GameWorld::Run(float dt)
             if (object != other) { // Não verificar colisão consigo mesmo
                 Square* square = dynamic_cast<Square*>(object.get());
                 Square* square2 = dynamic_cast<Square*>(other.get());
-                
+                                
                 if (square && square2) {
                     if (square->CheckCollision(square2->GetPosition(), square2->GetWidth(), square2->GetHeight())) {
 
@@ -66,5 +65,5 @@ void GameWorld::Render()
 }
 void GameWorld::HandleEvents(SDL_Event& event)
 {
-
+    
 }

@@ -12,6 +12,14 @@ void Square::Render(SDL_Renderer* renderer) {
     SDL_RenderFillRect(renderer, &rect);
 }
 
+void Square::ActualizeRect() {
+    // Atualiza a posição do retângulo com base na posição do objeto
+    rect.w = static_cast<int>(width);
+    rect.h = static_cast<int>(height);
+    rect.x = static_cast<int>(position.x);
+    rect.y = static_cast<int>(position.y);
+}
+
 bool Square::CheckCollision(point otherPosition, float otherWidth, float otherHeight) const {
     // Verifica se há colisão entre dois quadrados
     return (position.x < otherPosition.x + otherWidth &&
