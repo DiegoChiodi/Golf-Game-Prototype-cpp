@@ -20,6 +20,7 @@ public:
 
     virtual void Run(float dt) = 0;
     virtual void Render(SDL_Renderer* renderer) = 0;
+    virtual void HandleEvents(SDL_Event& event) = 0;
 
     point GetPosition() const { return position; }
 };

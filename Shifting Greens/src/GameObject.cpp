@@ -9,4 +9,5 @@ void GameObject::Run(float dt) {
 void GameObject::Render(SDL_Renderer* renderer) {
     // Implementar lógica de renderização do objeto
 }
+
 GameObject::~GameObject() {}

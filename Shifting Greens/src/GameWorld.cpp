@@ -5,15 +5,23 @@ const SDL_Color BACKGROUND_COLOR = {77, 255, 77, 255};
 GameWorld::GameWorld(SDL_Renderer* renderer)
     : renderer(renderer)
 {
-    std::unique_ptr<GameObject> ball = std::make_unique<Ball>
-    (100, 100, 100, 100, SDL_Color{255, 0, 0, 255}, vector{30, 0});
+    // Crie o player e mantenha um ponteiro separado para fácil acesso
+    auto p = std::make_unique<Player>(200, 100, 50, 50, SDL_Color{0, 255, 0, 255}, vector{10, 10});
+    player = p.get(); // Armazena o ponteiro do player
 
-    std::unique_ptr<GameObject> hold = std::make_unique<Square>
-    (100, 100, 50, 50, SDL_Color{0, 0, 255, 255});
+    objects.push_back(std::move(p)); // Adiciona o player à lista de objetos
 
-    objects.push_back(std::move(ball)); // Move o ponteiro para a lista
-    objects.push_back(std::move(hold)); // Move o ponteiro para a lista
+    // Crie a bola e o hold, armazene-os diretamente em objects
+    objects.push_back(std::make_unique<Ball>(
+        100, 100, 100, 100, SDL_Color{255, 0, 0, 255}, vector{0, 0}
+    ));
+}
 
+void GameWorld::HandleEvents(SDL_Event& event)
+{
+    if (player) {
+        player->HandleEvents(event);
+    }
 }
 
 GameWorld::~GameWorld()
@@ -63,7 +71,4 @@ void GameWorld::Render()
     SDL_Delay(16); // Aproximadamente 60 FPS
     
 }
-void GameWorld::HandleEvents(SDL_Event& event)
-{
 
-}
