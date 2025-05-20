@@ -5,13 +5,13 @@ const SDL_Color BACKGROUND_COLOR = {77, 255, 77, 255};
 GameWorld::GameWorld(SDL_Renderer* renderer)
     : renderer(renderer)
 {
-    std::unique_ptr<GameObject> player = std::make_unique<Ball>
-    (100, 100, 100, 100, SDL_Color{255, 0, 0, 255});
+    std::unique_ptr<GameObject> ball = std::make_unique<Ball>
+    (100, 100, 100, 100, SDL_Color{255, 0, 0, 255}, vector{30, 0});
 
     std::unique_ptr<GameObject> hold = std::make_unique<Square>
     (100, 100, 50, 50, SDL_Color{0, 0, 255, 255});
 
-    objects.push_back(std::move(player)); // Move o ponteiro para a lista
+    objects.push_back(std::move(ball)); // Move o ponteiro para a lista
     objects.push_back(std::move(hold)); // Move o ponteiro para a lista
 
 }
@@ -65,5 +65,5 @@ void GameWorld::Render()
 }
 void GameWorld::HandleEvents(SDL_Event& event)
 {
-    
+
 }
