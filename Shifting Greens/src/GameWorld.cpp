@@ -6,32 +6,21 @@ GameWorld::GameWorld(SDL_Renderer* renderer)
     : renderer(renderer)
 {
     // Crie o player e mantenha um ponteiro separado para fácil acesso
-<<<<<<< HEAD
-    auto p = std::make_unique<Player>(200, 100, 50, 50, SDL_Color{0, 255, 0, 255}, vector{3, 3});
-=======
-    auto p = std::make_unique<Player>(200, 100, 50, 50, SDL_Color{0, 255, 0, 255}, vector{10, 10});
->>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
+    auto p = std::make_unique<Player>(200, 100, 10, 20, SDL_Color{0, 255, 0, 255}, vector{35, 35});
     player = p.get(); // Armazena o ponteiro do player
 
     objects.push_back(std::move(p)); // Adiciona o player à lista de objetos
 
     // Crie a bola e o hold, armazene-os diretamente em objects
     objects.push_back(std::make_unique<Ball>(
-        100, 100, 100, 100, SDL_Color{255, 0, 0, 255}, vector{0, 0}
+        100, 100, 100, 100, SDL_Color{255, 0, 0, 255}, vector{0, 0}, 50, 50
     ));
 }
 
-<<<<<<< HEAD
 void GameWorld::HandleEvents(SDL_Event& event, const Uint8* stat, const float& dt)
 {
     if (player) {
         player->HandleEvents(event, stat, dt);
-=======
-void GameWorld::HandleEvents(SDL_Event& event)
-{
-    if (player) {
-        player->HandleEvents(event);
->>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
     }
 }
 
@@ -40,11 +29,7 @@ GameWorld::~GameWorld()
 
 }
 
-<<<<<<< HEAD
 void GameWorld::Run(const float& dt)
-=======
-void GameWorld::Run(float dt)
->>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
 {
 
     // Atualiza todos os objetos do jogo
@@ -62,7 +47,19 @@ void GameWorld::Run(float dt)
                     if (square->CheckCollision(square2->GetPosition(), square2->GetWidth(), square2->GetHeight())) {
 
                     }
-                }            
+                }
+
+                if (player == square && square2) {
+                    Interactable* interactable = dynamic_cast<Interactable*>(square2);
+                    if (interactable) {
+                        // Verifica se o objeto é interativo
+                        if (player->CheckCollision(interactable->GetPosition(),
+                            interactable->GetWidth(), interactable->GetHeight())) 
+                        {
+                            interactable->InteractAction();
+                        }
+                    }
+                }
             }
         }
     }
@@ -84,6 +81,4 @@ void GameWorld::Render()
     SDL_RenderPresent(renderer);
     
     SDL_Delay(16); // Aproximadamente 60 FPS
-    
 }
-

@@ -10,11 +10,7 @@ public:
     Square(float x, float y, float width, float height, SDL_Color color);
     ~Square() override;
 
-<<<<<<< HEAD
     void Run(const float& dt) override;
-=======
-    void Run(float dt) override;
->>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
 
     virtual void ActualizeRect();
     void Render(SDL_Renderer* renderer) override;

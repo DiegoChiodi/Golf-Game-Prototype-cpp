@@ -7,11 +7,7 @@ Square::Square(float x, float y, float width, float height, SDL_Color color)
 
 Square::~Square() {}
 
-<<<<<<< HEAD
 void Square::Run(const float& dt) {
-=======
-void Square::Run(float dt) {
->>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
     // Atualiza a posição do retângulo com base na posição do objeto
     ActualizeRect();
 }

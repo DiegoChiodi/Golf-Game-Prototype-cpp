@@ -1,21 +1,20 @@
 #pragma once
 
-#include "Movel.h"
+#include "Interactable.h"
 #include "BallDisplacement.h" 
+#include "iostream"
 
-class Ball : public Movel {
+class Ball : public Interactable {
 protected:
-
     BallDisplacement* ballDisplacement = nullptr;
 public:
-    Ball(float x, float y, float width, float height, SDL_Color color, vector speed);
-<<<<<<< HEAD
+    Ball(float x, float y, float width, float height, SDL_Color color, vector speed,
+         float wInteract, float hInteract);
     void Run(const float& dt) override;
     void Render(SDL_Renderer* renderer) override;
     void HandleEvents(SDL_Event& event, const Uint8* stat, const float& dt) override;
-=======
-    void Run(float dt) override;
-    void Render(SDL_Renderer* renderer) override;
-    void HandleEvents(SDL_Event& event) override;
->>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
+    void InteractAction() override {
+        // Implementar ação de interação
+        std::cout << "Interagindo com a bola!" << std::endl;
+    }
 };
