@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <stdexcept>
 
-#include "GameWorld.h"
+#include "GameWorld.h" // importar
 
 class GameManager {
 private:
