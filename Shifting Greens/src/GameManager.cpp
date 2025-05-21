@@ -62,6 +62,7 @@ GameManager::GameManager()
 }
 
 void GameManager::Run() {
+<<<<<<< HEAD
 
     SDL_Event event;
     const Uint8* stat = SDL_GetKeyboardState(nullptr);
@@ -75,11 +76,22 @@ void GameManager::Run() {
         gameWorld->Run(dt);
         stat = SDL_GetKeyboardState(nullptr);
         gameWorld->HandleEvents(this->event, stat, dt);
+=======
+    SDL_Event event;
+    while (running) {
+
+        Uint32 currentTime = SDL_GetTicks();
+        dt = (currentTime - previousTime) / 1000.0f; // dt em segundos
+        previousTime = currentTime;
+
+        gameWorld->Run(dt);
+>>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
                 running = false;
             }
+<<<<<<< HEAD
             if (event.type == SDL_KEYDOWN) {
                 switch (event.key.keysym.sym) {
                     case SDLK_ESCAPE:
@@ -96,6 +108,26 @@ void GameManager::Run() {
                 }
             }
         }   
+=======
+                if (event.type == SDL_KEYDOWN) {
+                    switch (event.key.keysym.sym) {
+                        case SDLK_ESCAPE:
+                            running = false;
+                            break;
+                        case SDLK_SPACE:
+                            Mix_PlayChannel(-1, strokeSound, 0);
+                            break;
+                        case SDLK_RETURN:
+                            Mix_PlayChannel(-1, holeSound, 0);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            gameWorld->HandleEvents(event);
+        }
+        
+>>>>>>> 4dfb594f4ef983018865a22bf328aee07b31894c
     }
 }
 
