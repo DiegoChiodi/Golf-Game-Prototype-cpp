@@ -10,4 +10,6 @@ public:
          float wInteract, float hInteract);
 
     virtual void InteractAction() = 0; // Pure virtual function for interaction
+    virtual GetInteractW() const { return wInteract; }
+    virtual GetInteractH() const { return hInteract; }
 };

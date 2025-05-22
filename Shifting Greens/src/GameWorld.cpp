@@ -6,14 +6,14 @@ GameWorld::GameWorld(SDL_Renderer* renderer)
     : renderer(renderer)
 {
     // Crie o player e mantenha um ponteiro separado para fácil acesso
-    auto p = std::make_unique<Player>(200, 100, 10, 20, SDL_Color{0, 255, 0, 255}, vector{35, 35});
+    auto p = std::make_unique<Player>(200, 100, 10, 20, SDL_Color{50, 50, 255, 255}, vector{35, 35});
     player = p.get(); // Armazena o ponteiro do player
 
     objects.push_back(std::move(p)); // Adiciona o player à lista de objetos
 
     // Crie a bola e o hold, armazene-os diretamente em objects
     objects.push_back(std::make_unique<Ball>(
-        100, 100, 100, 100, SDL_Color{255, 0, 0, 255}, vector{0, 0}, 50, 50
+        100, 100, 5, 5, SDL_Color{255, 255, 255, 255}, vector{0, 0}, 20, 20
     ));
 }
 
@@ -54,7 +54,7 @@ void GameWorld::Run(const float& dt)
                     if (interactable) {
                         // Verifica se o objeto é interativo
                         if (player->CheckCollision(interactable->GetPosition(),
-                            interactable->GetWidth(), interactable->GetHeight())) 
+                            interactable->GetInteractW(), interactable->GetInteractH())) 
                         {
                             interactable->InteractAction();
                         }
