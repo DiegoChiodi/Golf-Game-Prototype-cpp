@@ -29,7 +29,7 @@ GameWorld::~GameWorld()
 
 }
 
-void GameWorld::Run(const float& dt)
+void GameWorld::Run(const float& dt, const Uint8* stat)
 {
 
     // Atualiza todos os objetos do jogo
@@ -56,7 +56,10 @@ void GameWorld::Run(const float& dt)
                         if (player->CheckCollision(interactable->GetPositionColliser(),
                             interactable->GetInteractW(), interactable->GetInteractH())) 
                         {
-                            interactable->InteractAction();
+                            if (GameWorld::InteractAction(stat)) {
+                                // Chama a ação de interação do objeto
+                                interactable->InteractAction();
+                            }
                         }
                     }
                 }
@@ -81,4 +84,9 @@ void GameWorld::Render()
     SDL_RenderPresent(renderer);
     
     SDL_Delay(16); // Aproximadamente 60 FPS
+}
+
+bool GameWorld::InteractAction(const Uint8* stat)
+{
+    return stat[SDL_SCANCODE_SPACE];
 }

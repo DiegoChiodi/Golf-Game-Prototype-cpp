@@ -72,7 +72,7 @@ void GameManager::Run() {
         dt = (currentTime - previousTime) / 1000.0f; // dt em segundos
         previousTime = currentTime;
         
-        gameWorld->Run(dt);
+        gameWorld->Run(dt, stat);
         stat = SDL_GetKeyboardState(nullptr);
         gameWorld->HandleEvents(this->event, stat, dt);
 

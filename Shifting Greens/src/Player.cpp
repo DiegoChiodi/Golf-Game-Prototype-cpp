@@ -6,16 +6,17 @@ Player::Player(float x, float y, float width, float height, SDL_Color color, vec
     }
 
 void Player::HandleEvents(SDL_Event& event, const Uint8* stat, const float& dt) {
-    if (stat[SDL_SCANCODE_UP]) {
+    
+    if (stat[SDL_SCANCODE_W]) {
         position.y -= speed.y * dt;
     }
-    if (stat[SDL_SCANCODE_DOWN]) {
+    if (stat[SDL_SCANCODE_S]) {
         position.y += speed.y * dt;
     }
-    if (stat[SDL_SCANCODE_LEFT]) {
+    if (stat[SDL_SCANCODE_A]) {
         position.x -= speed.x * dt;
     }
-    if (stat[SDL_SCANCODE_RIGHT]) {
+    if (stat[SDL_SCANCODE_D]) {
         position.x += speed.x * dt;
     }
 }

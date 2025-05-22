@@ -16,7 +16,8 @@ public:
     GameWorld(SDL_Renderer* renderer);
     ~GameWorld();
 
-    void Run(const float& dt);
+    void Run(const float& dt, const Uint8* stat);
     void Render();
     void HandleEvents(SDL_Event& event, const Uint8* stat, const float& dt);
+    bool InteractAction(const Uint8* stat);
 };
