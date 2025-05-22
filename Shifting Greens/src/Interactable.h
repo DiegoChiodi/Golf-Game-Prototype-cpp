@@ -9,7 +9,11 @@ public:
     Interactable(float x, float y, float width, float height, SDL_Color color, vector speed,
          float wInteract, float hInteract);
 
-    virtual void InteractAction() = 0; // Pure virtual function for interaction
-    virtual GetInteractW() const { return wInteract; }
-    virtual GetInteractH() const { return hInteract; }
+    virtual void InteractAction() = 0;
+
+    virtual float GetInteractW() const { return wInteract; }
+    virtual float GetInteractH() const { return hInteract; }
+    inline virtual point GetPositionColliser() const { 
+        return { (position.x - (wInteract / 2) + (width / 2)), (position.y - (hInteract / 2) + (height / 2)) }; 
+    }
 };

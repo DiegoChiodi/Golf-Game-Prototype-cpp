@@ -53,7 +53,7 @@ void GameWorld::Run(const float& dt)
                     Interactable* interactable = dynamic_cast<Interactable*>(square2);
                     if (interactable) {
                         // Verifica se o objeto é interativo
-                        if (player->CheckCollision(interactable->GetPosition(),
+                        if (player->CheckCollision(interactable->GetPositionColliser(),
                             interactable->GetInteractW(), interactable->GetInteractH())) 
                         {
                             interactable->InteractAction();
