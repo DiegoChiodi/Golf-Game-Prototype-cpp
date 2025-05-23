@@ -19,8 +19,8 @@ GameWorld::GameWorld(SDL_Renderer* renderer)
 
 void GameWorld::HandleEvents(SDL_Event& event, const Uint8* stat, const float& dt)
 {
-    if (player) {
-        player->HandleEvents(event, stat, dt);
+    if (this->player) {
+        this->player->HandleEvents(event, stat, dt);
     }
 }
 
@@ -31,6 +31,10 @@ GameWorld::~GameWorld()
 
 void GameWorld::Run(const float& dt, const Uint8* stat)
 {
+    // Atualiza o temporizador de interação
+    if (this->interactTimer <= this->interactDelay) {
+        this->interactTimer += dt;
+    }
 
     // Atualiza todos os objetos do jogo
     for (auto& object : objects) {
@@ -49,7 +53,7 @@ void GameWorld::Run(const float& dt, const Uint8* stat)
                     }
                 }
 
-                if (player == square && square2) {
+                if (player == square && square2 && this->interactDelay < this->interactTimer) {
                     Interactable* interactable = dynamic_cast<Interactable*>(square2);
                     if (interactable) {
                         // Verifica se o objeto é interativo
@@ -59,6 +63,7 @@ void GameWorld::Run(const float& dt, const Uint8* stat)
                             if (GameWorld::InteractAction(stat)) {
                                 // Chama a ação de interação do objeto
                                 interactable->InteractAction();
+                                this->interactTimer = 0.0f; // Reinicia o temporizador de interação
                             }
                         }
                     }

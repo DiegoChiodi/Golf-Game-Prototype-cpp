@@ -12,6 +12,9 @@ private:
     SDL_Renderer* renderer;
     Player* player;
     std::list<std::unique_ptr<GameObject>> objects;
+    const float interactDelay = 0.75f; // Tempo de espera para interação
+    float interactTimer = 0.0f; // Temporizador de interação
+
 public:
     GameWorld(SDL_Renderer* renderer);
     ~GameWorld();

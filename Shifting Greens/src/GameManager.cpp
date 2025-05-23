@@ -74,7 +74,7 @@ void GameManager::Run() {
         
         gameWorld->Run(dt, stat);
         stat = SDL_GetKeyboardState(nullptr);
-        gameWorld->HandleEvents(this->event, stat, dt);
+        gameWorld->HandleEvents(this->event, stat, this->dt);
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
