@@ -19,9 +19,9 @@ public:
     GameObject(float x, float y, float width, float height);
     virtual ~GameObject();
 
-    virtual void Run(const float& dt) = 0;
+    virtual void Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer) = 0;
     virtual void Render(SDL_Renderer* renderer) = 0;
-    virtual void HandleEvents(SDL_Event& event, const Uint8* stat, const float& dt) = 0;
+    virtual void HandleEvents(const Uint8* stat, const float& dt) = 0;
 
     point GetPosition() const { return position; }
 };

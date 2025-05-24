@@ -17,20 +17,17 @@ GameWorld::GameWorld(SDL_Renderer* renderer, SDL_Texture* playerTexture)
     ));
 }
 
-void GameWorld::HandleEvents(SDL_Event& event, const Uint8* stat, const float& dt)
-{
-    if (this->player) {
-        this->player->HandleEvents(event, stat, dt);
-    }
-}
-
 GameWorld::~GameWorld()
 {
 
 }
 
-void GameWorld::Run(const float& dt, const Uint8* stat)
+void GameWorld::Run(const float& dt ,const Uint8* stat)
 {
+
+    SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+    SDL_RenderClear(renderer);
+
     // Atualiza o temporizador de interação
     if (this->interactTimer <= this->interactDelay) {
         this->interactTimer += dt;
@@ -39,8 +36,7 @@ void GameWorld::Run(const float& dt, const Uint8* stat)
     // Atualiza todos os objetos do jogo
     for (auto& object : objects) {
 
-        object->Run(dt);
-
+        object->Run(dt, stat, renderer);
         // Verifica colisões entre objetos
         for (auto& other : objects) {
             if (object != other) { // Não verificar colisão consigo mesmo
@@ -72,20 +68,7 @@ void GameWorld::Run(const float& dt, const Uint8* stat)
         }
     }
 
-    GameWorld::Render();
-}
-
-void GameWorld::Render()
-{
-    // Render game objects
-    SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
-    SDL_RenderClear(renderer);
     
-    
-    for (auto& object : objects) {
-        object->Render(this->renderer);
-    }
-
     SDL_RenderPresent(renderer);
     
     SDL_Delay(16); // Aproximadamente 60 FPS

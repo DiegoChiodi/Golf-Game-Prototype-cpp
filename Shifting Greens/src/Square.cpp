@@ -7,9 +7,10 @@ Square::Square(float x, float y, float width, float height, SDL_Color color)
 
 Square::~Square() {}
 
-void Square::Run(const float& dt) {
+void Square::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer) {
     // Atualiza a posição do retângulo com base na posição do objeto
     ActualizeRect();
+    Render(renderer);
 }
 
 void Square::Render(SDL_Renderer* renderer) {
