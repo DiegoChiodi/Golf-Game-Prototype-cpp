@@ -17,26 +17,24 @@ GameManager::GameManager()
     if (SDL_GetCurrentDisplayMode(0, &displayMode) != 0) {
         throw std::runtime_error("Erro ao obter resolução da tela: " + std::string(SDL_GetError()));
     }
-    
-    int const widthJan = displayMode.w;
-    int const heightJan = displayMode.h;
 
-    window = SDL_CreateWindow("Golf", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, widthJan, heightJan, SDL_WINDOW_SHOWN);
-    
-
+    window = SDL_CreateWindow("Golf", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (!window) {
         throw std::runtime_error("Erro ao criar janela: " + std::string(SDL_GetError()));
     }
     
-    std::cout << "Resolução da tela: " << widthJan << "x" << heightJan << std::endl;
-    std::cout << "Proporção: " << static_cast<float>(widthJan) / heightJan << std::endl;
+    SDL_DisplayMode dm;
+    SDL_GetCurrentDisplayMode(0, &dm);
+    std::cout << "Resolução real do monitor: " << dm.w << "x" << dm.h << std::endl;
+
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest"); // antes de criar o renderer
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         throw std::runtime_error("Erro ao criar renderizador: " + std::string(SDL_GetError()));
     }
 
-    SDL_RenderSetLogicalSize(this->renderer, 640, 360);
+    SDL_RenderSetLogicalSize(renderer, 640, 360);    
 
     musicTable = Mix_LoadMUS("assets/music/musicTable.mp3");
     if (!musicTable) {
