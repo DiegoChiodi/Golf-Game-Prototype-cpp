@@ -48,6 +48,11 @@ GameManager::GameManager()
         throw std::runtime_error("Erro ao carregar textura do jogador: " + std::string(IMG_GetError()));
     }
 
+    playerTextureSprinting = IMG_LoadTexture(renderer, "assets/sprites/Golfer/GolferSprinting.png");
+    if (!playerTextureSprinting) {
+        throw std::runtime_error("Erro ao carregar textura do jogador: " + std::string(IMG_GetError()));
+    }
+
     // Carregar música e efeitos sonoros ---------------------------------------------
     musicTable = Mix_LoadMUS("assets/music/musicTable.mp3");
     if (!musicTable) {  
@@ -112,7 +117,7 @@ void GameManager::Run() {
 
 void GameManager::Initialize() {
     std::cout << "Inicializando o GameWorld...\n";
-    gameWorld = std::make_unique<GameWorld>(renderer, playerTexture);
+    gameWorld = std::make_unique<GameWorld>(renderer, playerTexture, playerTextureSprinting);
     previousTime = SDL_GetTicks();
     dt = 0.0f;
 }

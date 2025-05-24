@@ -13,6 +13,7 @@ private:
     Mix_Chunk* strokeSound;
     Mix_Chunk* holeSound;
     SDL_Texture* playerTexture;
+    SDL_Texture* playerTextureSprinting;
     bool running;
     SDL_Event event;
     float dt;

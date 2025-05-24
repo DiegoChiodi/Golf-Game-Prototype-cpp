@@ -12,8 +12,8 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer)
     if (ballDisplacement) {
         ballDisplacement->Run(dt, stat, renderer);
     }
-
-    Ball::Render(renderer);
+    
+    Render(renderer);
 }
 
 void Ball::Render(SDL_Renderer* renderer) 

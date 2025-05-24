@@ -1,8 +1,8 @@
 #include "Player.h"
 #include <iostream>
 
-Player::Player(float x, float y, float width, float height, SDL_Color color, vector speed, SDL_Texture* textureUpright)
-    : Movel(x, y, width, height, color, speed), textureUpright(textureUpright) {
+Player::Player(float x, float y, float width, float height, SDL_Color color, vector speed, SDL_Texture* textureUpright, SDL_Texture* textureSprinting)
+    : Movel(x, y, width, height, color, speed), textureUpright(textureUpright), textureSprinting(textureSprinting), isMoving(false), currentDirection(Direction::RIGHT), delayAnimate(0.0f) {
         actualTexture = textureUpright;
     }
 
@@ -62,9 +62,9 @@ void Player::Animated(const float& dt) {
 
         if (animate)
         {
-            std::cout << "Les" << std::endl;
+            actualTexture = this->textureSprinting;
         } else {
-            std::cout << "go" << std::endl;
+            actualTexture = this->textureUpright;
         }
 
         if (delayAnimate > 0.5f)

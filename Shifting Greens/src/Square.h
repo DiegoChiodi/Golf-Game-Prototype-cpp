@@ -18,5 +18,4 @@ public:
     bool CheckCollision(point otherPosition, float otherWidth, float otherHeight) const;
     float GetWidth() const { return width; }
     float GetHeight() const { return height; }
-
 };
