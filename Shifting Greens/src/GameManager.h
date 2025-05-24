@@ -12,6 +12,7 @@ private:
     Mix_Music* musicTable;
     Mix_Chunk* strokeSound;
     Mix_Chunk* holeSound;
+    SDL_Texture* playerTexture;
     bool running;
     SDL_Event event;
     float dt;

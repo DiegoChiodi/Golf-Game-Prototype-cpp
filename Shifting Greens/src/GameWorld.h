@@ -16,7 +16,7 @@ private:
     float interactTimer = 0.0f; // Temporizador de interação
 
 public:
-    GameWorld(SDL_Renderer* renderer);
+    GameWorld(SDL_Renderer* renderer, SDL_Texture* playerTexture);
     ~GameWorld();
 
     void Run(const float& dt, const Uint8* stat);
