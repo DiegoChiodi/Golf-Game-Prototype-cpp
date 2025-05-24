@@ -42,16 +42,9 @@ GameManager::GameManager()
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);    
 
     // Carregar Texturas ------------------------------------------------------------
-    
-    playerTexture = IMG_LoadTexture(renderer, "assets/sprites/Golfer/GolferUpright.png");
-    if (!playerTexture) {
-        throw std::runtime_error("Erro ao carregar textura do jogador: " + std::string(IMG_GetError()));
-    }
 
-    playerTextureSprinting = IMG_LoadTexture(renderer, "assets/sprites/Golfer/GolferSprinting.png");
-    if (!playerTextureSprinting) {
-        throw std::runtime_error("Erro ao carregar textura do jogador: " + std::string(IMG_GetError()));
-    }
+    textureManager.LoadTexture("GolferUpright", "assets/sprites/Golfer/GolferUpright.png", renderer);
+    textureManager.LoadTexture("GolferSprinting", "assets/sprites/Golfer/GolferSprinting.png", renderer);
 
     // Carregar música e efeitos sonoros ---------------------------------------------
     musicTable = Mix_LoadMUS("assets/music/musicTable.mp3");
@@ -117,7 +110,7 @@ void GameManager::Run() {
 
 void GameManager::Initialize() {
     std::cout << "Inicializando o GameWorld...\n";
-    gameWorld = std::make_unique<GameWorld>(renderer, playerTexture, playerTextureSprinting);
+    gameWorld = std::make_unique<GameWorld>(renderer, &textureManager);
     previousTime = SDL_GetTicks();
     dt = 0.0f;
 }
@@ -131,8 +124,6 @@ GameManager::~GameManager()
     if (musicTable) Mix_FreeMusic(musicTable);
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
-    if (playerTexture) SDL_DestroyTexture(playerTexture);
-
     Mix_CloseAudio();
     Mix_Quit();
     SDL_Quit();

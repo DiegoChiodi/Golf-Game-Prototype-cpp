@@ -10,7 +10,7 @@ private:
     SDL_Texture* textureUpright;
     SDL_Texture* textureSprinting;
     bool isMoving;
-    enum class Direction { RIGHT, LEFT, UP, DOWN};
+    enum class Direction { RIGHT, LEFT};
     Direction currentDirection;
     SDL_RendererFlip flip = SDL_FLIP_NONE;
     bool animate = false;

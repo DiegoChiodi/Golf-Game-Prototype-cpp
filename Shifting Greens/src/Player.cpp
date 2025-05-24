@@ -22,7 +22,6 @@ void Player::HandleEvents(const Uint8* stat, const float& dt) {
         } else {
             position.y = 0;
         }
-        currentDirection = Direction::UP;
         isMoving = true;
     }
         
@@ -32,7 +31,6 @@ void Player::HandleEvents(const Uint8* stat, const float& dt) {
         } else {
             position.y = heightJan - height;
         }
-        currentDirection = Direction::DOWN;
         isMoving = true;
     }
 

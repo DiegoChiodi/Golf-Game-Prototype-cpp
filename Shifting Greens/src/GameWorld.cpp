@@ -2,11 +2,14 @@
 
 const SDL_Color BACKGROUND_COLOR = {77, 255, 77, 255};
 
-GameWorld::GameWorld(SDL_Renderer* renderer, SDL_Texture* playerTexture, SDL_Texture* playerTextureSprinting)
-    : renderer(renderer)
+GameWorld::GameWorld(SDL_Renderer* renderer, TextureManager* textureManager)
+    : renderer(renderer), textureManager(textureManager)
 {
     // Crie o player e mantenha um ponteiro separado para fácil acesso
-    auto p = std::make_unique<Player>(200, 100, 10, 20, SDL_Color{50, 50, 255, 255}, vector{35, 35}, playerTexture, playerTextureSprinting);
+    auto p = std::make_unique<Player>(200, 100, 10, 20, SDL_Color{50, 50, 255, 255}, vector{35, 35},
+    this->textureManager->GetTexture("GolferUpright"), 
+    this->textureManager->GetTexture("GolferSprinting"));
+
     player = p.get(); // Armazena o ponteiro do player
 
     objects.push_back(std::move(p)); // Adiciona o player à lista de objetos
