@@ -1,12 +1,12 @@
 #pragma once 
 
-#include "Movel.h"
+#include "Square.h"
 
-class Interactable : public Movel {
+class Interactable : public Square {
 protected:
     float wInteract, hInteract; // Position of the interaction
 public:
-    Interactable(float x, float y, float width, float height, SDL_Color color, vector speed,
+    Interactable(float x, float y, float width, float height, SDL_Color color,
          float wInteract, float hInteract);
 
     virtual void InteractAction() = 0;

@@ -14,7 +14,6 @@ public:
 
     virtual void ActualizeRect();
     void Render(SDL_Renderer* renderer) override;
-    void HandleEvents(const Uint8* stat, const float& dt) override {}
     bool CheckCollision(point otherPosition, float otherWidth, float otherHeight) const;
     float GetWidth() const { return width; }
     float GetHeight() const { return height; }

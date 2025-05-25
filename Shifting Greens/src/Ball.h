@@ -7,9 +7,10 @@
 class Ball : public Interactable {
 protected:
     BallDisplacement* ballDisplacement = nullptr;
+    vector speed; // Velocidade da bola
 public:
-    Ball(float x, float y, float width, float height, SDL_Color color, vector speed,
-         float wInteract, float hInteract);
+    Ball(float x, float y, float width, float height, SDL_Color color,
+         float wInteract, float hInteract, vector speed);
     void Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer) override;
     void Render(SDL_Renderer* renderer) override;
     void InteractAction() override {

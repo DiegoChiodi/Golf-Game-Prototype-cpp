@@ -10,8 +10,4 @@ void GameObject::Render(SDL_Renderer* renderer) {
     // Implementar lógica de renderização do objeto
 }
 
-void GameObject::HandleEvents(const Uint8* stat, const float& dt) {
-    // Implementar lógica de tratamento de eventos
-}
-
 GameObject::~GameObject() {}

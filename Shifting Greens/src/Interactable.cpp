@@ -1,5 +1,5 @@
 #include "Interactable.h"
 
-Interactable::Interactable(float x, float y, float width, float height, SDL_Color color, vector speed,
+Interactable::Interactable(float x, float y, float width, float height, SDL_Color color,
                            float wInteract, float hInteract)
-    : Movel(x, y, width, height, color, speed), wInteract(wInteract), hInteract(hInteract) {}
+    : Square(x, y, width, height, color), wInteract(wInteract), hInteract(hInteract) {}

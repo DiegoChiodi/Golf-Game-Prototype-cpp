@@ -16,7 +16,7 @@ GameWorld::GameWorld(SDL_Renderer* renderer, TextureManager* textureManager)
 
     // Crie a bola e o hold, armazene-os diretamente em objects
     objects.push_back(std::make_unique<Ball>(
-        100, 100, 5, 5, SDL_Color{255, 255, 255, 255}, vector{0, 0}, 20, 20
+        100, 100, 5, 5, SDL_Color{255, 255, 255, 255}, 20, 20, vector{0, 0}
     ));
 }
 
