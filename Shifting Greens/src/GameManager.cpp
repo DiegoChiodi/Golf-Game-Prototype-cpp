@@ -38,7 +38,7 @@ GameManager::GameManager()
         throw std::runtime_error("Erro ao criar renderizador: " + std::string(SDL_GetError()));
     }
 
-    SDL_RenderSetLogicalSize(renderer, resoluctionJanW, resoluctionJanH);
+    SDL_RenderSetLogicalSize(renderer, Global::LOGICAL_WIDTH, Global::LOGICAL_HEIGHT);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);    
 
     // Carregar Texturas ------------------------------------------------------------

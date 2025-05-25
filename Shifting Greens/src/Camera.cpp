@@ -2,16 +2,12 @@
 #include "GlobalVariables.h"
 
 Camera::Camera() {
-    int const BASE_WIDTH = 640;
-    int const BASE_HEIGHT = 360;
-    this->viewBox = { 0, 0, BASE_WIDTH, BASE_HEIGHT };
+    this->viewBox = { 0, 0, Global::LOGICAL_WIDTH, Global::LOGICAL_HEIGHT };
 }
 
 void Camera::update(int targetX, int targetY, int mapW, int mapH) {
-    int const BASE_WIDTH = 640;
-    int const BASE_HEIGHT = 360;
-    this->viewBox.x = targetX - BASE_WIDTH / 2;
-    this->viewBox.y = targetY - BASE_HEIGHT / 2;
+    this->viewBox.x = targetX - Global::LOGICAL_WIDTH / 2;
+    this->viewBox.y = targetY - Global::LOGICAL_HEIGHT / 2;
 
     if (this->viewBox.x < 0) {
         this->viewBox.x = 0;
@@ -21,12 +17,12 @@ void Camera::update(int targetX, int targetY, int mapW, int mapH) {
         this->viewBox.y = 0;
     }
 
-    if (this->viewBox.x + BASE_WIDTH > mapW) {
-        this->viewBox.x = mapW - BASE_WIDTH;
+    if (this->viewBox.x + Global::LOGICAL_WIDTH > mapW) {
+        this->viewBox.x = mapW - Global::LOGICAL_WIDTH;
     }
 
-    if (this->viewBox.y + BASE_HEIGHT > mapH) {
-        this->viewBox.y = mapH - BASE_HEIGHT;
+    if (this->viewBox.y + Global::LOGICAL_HEIGHT > mapH) {
+        this->viewBox.y = mapH - Global::LOGICAL_HEIGHT;
     }
 }
 

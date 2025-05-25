@@ -20,10 +20,10 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
     }
         
     if (stat[SDL_SCANCODE_S]) {
-        if (position.y + speed.y * dt + height <= heightJan) {
+        if (position.y + speed.y * dt + height <= Global::LOGICAL_HEIGHT) {
             position.y += speed.y * dt;
         } else {
-            position.y = heightJan - height;
+            position.y = Global::LOGICAL_WIDTH - height;
         }
         isMoving = true;
     }
@@ -39,10 +39,10 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
     }
 
     if (stat[SDL_SCANCODE_D]) {
-        if (position.x + speed.x * dt + width <= widthJan) {
+        if (position.x + speed.x * dt + width <= Global::LOGICAL_WIDTH) {
             position.x += speed.x * dt;
         } else {
-            position.x = widthJan - width;
+            position.x = Global::LOGICAL_WIDTH - width;
         }
         currentDirection = Direction::RIGHT;
         isMoving = true;
