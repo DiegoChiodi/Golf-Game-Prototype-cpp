@@ -3,10 +3,10 @@
 const SDL_Color BACKGROUND_COLOR = {77, 255, 77, 255};
 
 GameWorld::GameWorld(SDL_Renderer* renderer, TextureManager* textureManager)
-    : renderer(renderer), textureManager(textureManager)
+    : renderer(renderer), textureManager(textureManager), camera()
 {
     // Crie o player e mantenha um ponteiro separado para fácil acesso
-    auto p = std::make_unique<Player>(200, 100, 10, 20, SDL_Color{50, 50, 255, 255}, vector{35, 35},
+    auto p = std::make_unique<Player>(200, 100, 10, 20, SDL_Color{50, 50, 255, 255}, vector{60, 60},
     this->textureManager->GetTexture("GolferUpright"), 
     this->textureManager->GetTexture("GolferSprinting"));
 
@@ -36,10 +36,17 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
         this->interactTimer += dt;
     }
 
+    this->camera.update(
+        this->player->GetPosition().x, 
+        this->player->GetPosition().y, 
+        Global::MAP_WIDTH,
+        Global::MAP_HEIGHT
+        );
+
     // Atualiza todos os objetos do jogo
     for (auto& object : objects) {
 
-        object->Run(dt, stat, renderer);
+        object->Run(dt, stat, renderer, this->camera.getView());
         // Verifica colisões entre objetos
         for (auto& other : objects) {
             if (object != other) { // Não verificar colisão consigo mesmo

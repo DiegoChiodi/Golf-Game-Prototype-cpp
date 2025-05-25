@@ -3,8 +3,8 @@
 Movel::Movel(float x, float y, float width, float height, SDL_Color color, vector speed)
     : Square(x, y, width, height, color), speed(speed){}
 
-void Movel::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer) {
-    Square::Run(dt, stat, renderer);
+void Movel::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const SDL_Rect& camera) {
+    Square::Run(dt, stat, renderer, camera);
     HandleEvents(stat, dt);
 }
 void Movel::HandleEvents(const Uint8* stat, const float& dt) {
@@ -20,10 +20,10 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
     }
         
     if (stat[SDL_SCANCODE_S]) {
-        if (position.y + speed.y * dt + height <= Global::LOGICAL_HEIGHT) {
+        if (position.y + speed.y * dt + height <= Global::MAP_HEIGHT) {
             position.y += speed.y * dt;
         } else {
-            position.y = Global::LOGICAL_WIDTH - height;
+            position.y = Global::MAP_HEIGHT - height;
         }
         isMoving = true;
     }
@@ -39,10 +39,10 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
     }
 
     if (stat[SDL_SCANCODE_D]) {
-        if (position.x + speed.x * dt + width <= Global::LOGICAL_WIDTH) {
+        if (position.x + speed.x * dt + width <= Global::MAP_WIDTH) {
             position.x += speed.x * dt;
         } else {
-            position.x = Global::LOGICAL_WIDTH - width;
+            position.x = Global::MAP_WIDTH - width;
         }
         currentDirection = Direction::RIGHT;
         isMoving = true;

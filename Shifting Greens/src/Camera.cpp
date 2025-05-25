@@ -4,10 +4,16 @@
 Camera::Camera() {
     this->viewBox = { 0, 0, Global::LOGICAL_WIDTH, Global::LOGICAL_HEIGHT };
 }
-
 void Camera::update(int targetX, int targetY, int mapW, int mapH) {
-    this->viewBox.x = targetX - Global::LOGICAL_WIDTH / 2;
-    this->viewBox.y = targetY - Global::LOGICAL_HEIGHT / 2;
+    float lerp = 0.1f; // Lerp factor
+
+    // Calculate target positions for the camera center
+    int targetViewX = targetX - Global::LOGICAL_WIDTH / 2;
+    int targetViewY = targetY - Global::LOGICAL_HEIGHT / 2;
+
+    // Apply linear interpolation to smooth camera movement
+    this->viewBox.x += static_cast<int>((targetViewX - this->viewBox.x) * lerp);
+    this->viewBox.y += static_cast<int>((targetViewY - this->viewBox.y) * lerp);
 
     if (this->viewBox.x < 0) {
         this->viewBox.x = 0;

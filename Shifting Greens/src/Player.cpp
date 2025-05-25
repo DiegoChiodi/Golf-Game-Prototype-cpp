@@ -8,8 +8,8 @@ Player::Player(float x, float y, float width, float height, SDL_Color color, vec
         currentDirection = Direction::RIGHT;
     }
 
-void Player::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer) {
-    Movel::Run(dt, stat, renderer);
+void Player::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const SDL_Rect& camera) {
+    Movel::Run(dt, stat, renderer, camera);
     Animated(dt);
 } 
 
@@ -35,12 +35,19 @@ void Player::Animated(const float& dt) {
     }
 }
 
-void Player::Render(SDL_Renderer* renderer) {
+void Player::Render(SDL_Renderer* renderer, const SDL_Rect& camera) {
     
+    SDL_Rect renderRect;
+    renderRect.x = this->rect.x - camera.x;
+    renderRect.y = this->rect.y - camera.y;
+    renderRect.w = this->rect.w;
+    renderRect.h = this->rect.h;
+
     if (this->currentDirection == Direction::LEFT && this->isMoving) {
         this->flip = SDL_FLIP_HORIZONTAL;
     } else if (this->currentDirection == Direction::RIGHT && this->isMoving) {
         this->flip = SDL_FLIP_NONE;
     }
-    SDL_RenderCopyEx(renderer, actualTexture, nullptr, &rect, 0.0, nullptr, flip);
+    
+    SDL_RenderCopyEx(renderer, actualTexture, nullptr, &renderRect, 0.0, nullptr, flip);
 }

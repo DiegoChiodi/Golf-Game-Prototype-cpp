@@ -13,5 +13,5 @@ public:
     Movel(float x, float y, float width, float height, SDL_Color color, vector speed);
 
     virtual void HandleEvents(const Uint8* stat, const float& dt);
-    virtual void Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer);
+    virtual void Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const SDL_Rect& camera);
 };

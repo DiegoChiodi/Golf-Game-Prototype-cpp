@@ -11,8 +11,8 @@ protected:
 public:
     Ball(float x, float y, float width, float height, SDL_Color color,
          float wInteract, float hInteract, vector speed);
-    void Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer) override;
-    void Render(SDL_Renderer* renderer) override;
+    void Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const SDL_Rect& camera) override;
+    void Render(SDL_Renderer* renderer, const SDL_Rect& camera) override;
     void InteractAction() override {
         // Implementar ação de interação
         std::cout << "Interagindo com a bola!" << std::endl;

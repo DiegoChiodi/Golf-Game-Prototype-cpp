@@ -7,6 +7,7 @@
 #include <memory>
 #include <list>
 #include "TextureManager.h"
+#include "Camera.h"
 
 class GameWorld {
 private:
@@ -16,6 +17,7 @@ private:
     const float interactDelay = 0.75f; // Tempo de espera para interação
     float interactTimer = 0.0f; // Temporizador de interação
     TextureManager* textureManager;
+    Camera camera;
 
 public:
     GameWorld(SDL_Renderer* renderer, TextureManager* textureManager);
