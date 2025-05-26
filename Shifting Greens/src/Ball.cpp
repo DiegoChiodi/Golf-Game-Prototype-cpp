@@ -24,7 +24,7 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const
 
 void Ball::InteractAction() 
 {
-    ballPreview = new BallPreview(position.x, position.y, width, height, {70, 0, 70 , 255}, {125, 125});
+    ballPreview = new BallPreview(position.x, position.y, width, height, {70, 0, 70 , 255}, {80, 80});
     estage = Estage::PREVIEW;
 }
 

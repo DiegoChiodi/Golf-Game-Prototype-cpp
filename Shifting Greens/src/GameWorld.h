@@ -18,7 +18,7 @@ private:
     float interactTimer = 0.0f; // Temporizador de interação
     TextureManager* textureManager;
     Camera camera;
-
+    GameObject* viewTarget; // Ponto de destino da câmera
 public:
     GameWorld(SDL_Renderer* renderer, TextureManager* textureManager);
     ~GameWorld();

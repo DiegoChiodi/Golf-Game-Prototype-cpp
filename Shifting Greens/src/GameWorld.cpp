@@ -11,6 +11,7 @@ GameWorld::GameWorld(SDL_Renderer* renderer, TextureManager* textureManager)
     this->textureManager->GetTexture("GolferSprinting"));
 
     player = p.get(); // Armazena o ponteiro do player
+    viewTarget = player;    // Define o ponto de destino da câmera como o player
 
     objects.push_back(std::move(p)); // Adiciona o player à lista de objetos
 
@@ -37,8 +38,8 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
     }
 
     this->camera.update(
-        this->player->GetPosition().x, 
-        this->player->GetPosition().y, 
+        this->viewTarget->GetPosition().x, 
+        this->viewTarget->GetPosition().y, 
         Global::MAP_WIDTH,
         Global::MAP_HEIGHT
         );
@@ -74,6 +75,7 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
                                 if (ball)
                                 {
                                     player->SetState(MovingState::IDLE);
+                                    viewTarget = ball->GetBallPreview();
                                 }
                             }
                         }

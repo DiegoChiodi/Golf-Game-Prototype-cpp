@@ -22,4 +22,5 @@ public:
     void InteractAction() override;
     Estage GetEstage() const { return estage; }
     void SetEstage(Estage estageClaim) { this->estage = estageClaim; }
+    BallPreview* GetBallPreview() const { return ballPreview; }
 };
