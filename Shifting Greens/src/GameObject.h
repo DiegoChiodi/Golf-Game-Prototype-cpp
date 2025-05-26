@@ -23,4 +23,5 @@ public:
     virtual void Render(SDL_Renderer* renderer, const SDL_Rect& camera) = 0;
 
     point GetPosition() const { return position; }
+    void SetPosition(vector pos);
 };

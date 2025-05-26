@@ -2,7 +2,8 @@
 
 Square::Square(float x, float y, float width, float height, SDL_Color color)
     : GameObject(x, y, width, height), color(color), rect{static_cast<int>(x), static_cast<int>(y), static_cast<int>(width), static_cast<int>(height)}
-{}
+{
+}
 
 
 Square::~Square() {}

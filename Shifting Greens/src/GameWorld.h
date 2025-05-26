@@ -8,6 +8,7 @@
 #include <list>
 #include "TextureManager.h"
 #include "Camera.h"
+#include "Hole.h"
 
 class GameWorld {
 private:
@@ -25,5 +26,5 @@ public:
 
     void Run(const float& dt, const Uint8* stat);
     bool InteractAction(const Uint8* stat);
-    void SetCamera(SDL_Rect& cameraClained) {  this->camera.setView(cameraClained); }
+    void Colliders(const float& dt, const Uint8* stat, GameObject* object, GameObject* other);
 };

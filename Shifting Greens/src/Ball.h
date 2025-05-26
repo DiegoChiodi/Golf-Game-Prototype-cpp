@@ -20,6 +20,7 @@ public:
     void Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const SDL_Rect& camera) override;
     void Render(SDL_Renderer* renderer, const SDL_Rect& camera) override;
     void InteractAction() override;
+    void Boost(point distance);
     Estage GetEstage() const { return estage; }
     void SetEstage(Estage estageClaim) { this->estage = estageClaim; }
     BallPreview* GetBallPreview() const { return ballPreview; }

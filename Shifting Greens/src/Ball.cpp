@@ -33,3 +33,13 @@ void Ball::Render(SDL_Renderer* renderer, const SDL_Rect& camera)
     RenderCollisor(renderer, camera);
     Square::Render(renderer, camera);
 }
+
+void Ball::Boost(point distance) 
+{
+    ballPreview->SetPosition(
+        {
+            distance.x / 2, 
+            distance.y / 2
+        }
+    );
+}

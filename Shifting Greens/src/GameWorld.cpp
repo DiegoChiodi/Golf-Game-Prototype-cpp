@@ -16,9 +16,18 @@ GameWorld::GameWorld(SDL_Renderer* renderer, TextureManager* textureManager)
     objects.push_back(std::move(p)); // Adiciona o player à lista de objetos
 
     // Crie a bola e o hold, armazene-os diretamente em objects
-    objects.push_back(std::make_unique<Ball>(
+
+    auto ball = std::make_unique<Ball>(
         100, 100, 5, 5, SDL_Color{255, 255, 255, 255}, 20, 20, vector{0, 0}
+    );
+
+    objects.push_back(std::make_unique<Hole>(
+        300, 300, 10, 10, SDL_Color{255, 0, 0, 255}, ball.get()
     ));
+
+    objects.push_back(std::move(ball));
+
+    
 }
 
 GameWorld::~GameWorld()
@@ -50,37 +59,9 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
         object->Run(dt, stat, renderer, this->camera.getView());
         // Verifica colisões entre objetos
         for (auto& other : objects) {
-            if (object != other) { // Não verificar colisão consigo mesmo
-                Square* square = dynamic_cast<Square*>(object.get());
-                Square* square2 = dynamic_cast<Square*>(other.get());
-                                
-                if (square && square2) {
-                    if (square->CheckCollision(square2->GetPosition(), square2->GetWidth(), square2->GetHeight())) {
-
-                    }
-                }
-
-                if (player == square && square2 && this->interactDelay < this->interactTimer) {
-                    Interactable* interactable = dynamic_cast<Interactable*>(square2);
-                    if (interactable) {
-                        // Verifica se o objeto é interativo
-                        if (player->CheckCollision(interactable->GetPositionColliser(),
-                            interactable->GetInteractW(), interactable->GetInteractH())) 
-                        {
-                            if (GameWorld::InteractAction(stat)) {
-                                // Chama a ação de interação do objeto
-                                interactable->InteractAction();
-                                this->interactTimer = 0.0f; // Reinicia o temporizador de interação
-                                Ball* ball = dynamic_cast<Ball*>(interactable);
-                                if (ball)
-                                {
-                                    player->SetState(MovingState::IDLE);
-                                    viewTarget = ball->GetBallPreview();
-                                }
-                            }
-                        }
-                    }
-                }
+            if (object != other) 
+            { // Não verificar colisão consigo mesmo
+                Colliders(dt, stat, object.get(), other.get());
             }
         }
     }
@@ -94,4 +75,53 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
 bool GameWorld::InteractAction(const Uint8* stat)
 {
     return stat[SDL_SCANCODE_SPACE];
+}
+
+void GameWorld::Colliders(const float& dt, const Uint8* stat, GameObject* object, GameObject* other)
+{
+    Square* square = dynamic_cast<Square*>(object);
+    Square* square2 = dynamic_cast<Square*>(other);
+                    
+    if (square && square2) {
+        Ball* ball = dynamic_cast<Ball*>(square);
+
+        if (square->CheckCollision(square2->GetPosition(), square2->GetWidth(), square2->GetHeight())) {
+
+        }
+    }
+    if (player == square && square2 && this->interactDelay < this->interactTimer) 
+    {
+        Interactable* interactable = dynamic_cast<Interactable*>(square2);
+        if (interactable) {
+            // Verifica se o objeto é interativo
+            if (player->CheckCollision(interactable->GetPositionColliser(),
+                interactable->GetInteractW(), interactable->GetInteractH())) 
+            {
+                if (GameWorld::InteractAction(stat)) {
+                    // Chama a ação de interação do objeto
+                    interactable->InteractAction();
+                    this->interactTimer = 0.0f; // Reinicia o temporizador de interação
+                    Ball* ball = dynamic_cast<Ball*>(interactable);
+                    if (ball)
+                    {
+                        player->SetState(MovingState::IDLE);
+                        viewTarget = ball->GetBallPreview();
+
+                        Hole* hole = nullptr;
+
+                        for (auto& hole : objects) {
+                            Hole* h = dynamic_cast<Hole*>(hole.get());
+                            if (h && h->GetBall() == ball) {
+                                point distance = {
+                                    h->GetPosition().x + ball->GetPosition().x,
+                                    h->GetPosition().y + ball->GetPosition().y
+                                }; 
+                                ball->Boost(distance);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
