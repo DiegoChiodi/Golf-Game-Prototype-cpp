@@ -25,4 +25,5 @@ public:
 
     void Run(const float& dt, const Uint8* stat);
     bool InteractAction(const Uint8* stat);
+    void SetCamera(SDL_Rect& cameraClained) {  this->camera.setView(cameraClained); }
 };

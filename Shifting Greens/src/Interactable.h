@@ -16,4 +16,5 @@ public:
     inline virtual point GetPositionColliser() const { 
         return { (position.x - (wInteract / 2) + (width / 2)), (position.y - (hInteract / 2) + (height / 2)) }; 
     }
+    void RenderCollisor(SDL_Renderer* renderer, const SDL_Rect& camera);
 };

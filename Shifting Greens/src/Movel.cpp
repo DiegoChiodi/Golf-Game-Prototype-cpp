@@ -5,10 +5,15 @@ Movel::Movel(float x, float y, float width, float height, SDL_Color color, vecto
 
 void Movel::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const SDL_Rect& camera) {
     Square::Run(dt, stat, renderer, camera);
-    HandleEvents(stat, dt);
+
+    if (movingState != MovingState::IDLE)
+    {
+        HandleEvents(stat, dt);
+    }
 }
 void Movel::HandleEvents(const Uint8* stat, const float& dt) {
-    isMoving = false;
+    movingState = MovingState::IDLE_CENTRAL;
+
 
     if (stat[SDL_SCANCODE_W]) {
         if (position.y - speed.y * dt >= 0) {
@@ -16,7 +21,7 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
         } else {
             position.y = 0;
         }
-        isMoving = true;
+        movingState = MovingState::SPRINTING;
     }
         
     if (stat[SDL_SCANCODE_S]) {
@@ -25,7 +30,7 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
         } else {
             position.y = Global::MAP_HEIGHT - height;
         }
-        isMoving = true;
+        movingState = MovingState::SPRINTING;
     }
 
     if (stat[SDL_SCANCODE_A]) {
@@ -35,7 +40,7 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
             position.x = 0;
         }
         currentDirection = Direction::LEFT;
-        isMoving = true;
+        movingState = MovingState::SPRINTING;
     }
 
     if (stat[SDL_SCANCODE_D]) {
@@ -45,6 +50,6 @@ void Movel::HandleEvents(const Uint8* stat, const float& dt) {
             position.x = Global::MAP_WIDTH - width;
         }
         currentDirection = Direction::RIGHT;
-        isMoving = true;
+        movingState = MovingState::SPRINTING;
     }
 }

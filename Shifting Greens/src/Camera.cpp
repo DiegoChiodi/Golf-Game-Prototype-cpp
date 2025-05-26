@@ -35,3 +35,7 @@ void Camera::update(int targetX, int targetY, int mapW, int mapH) {
 SDL_Rect Camera::getView() const {
     return this->viewBox;
 }
+
+void Camera::setView(SDL_Rect& viewClaim) {
+    this->viewBox = viewClaim;
+}

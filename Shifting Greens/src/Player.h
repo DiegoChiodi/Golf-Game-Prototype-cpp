@@ -3,13 +3,12 @@
 #include "Movel.h"
 #include <SDL2/SDL_image.h>
 
-
 class Player : public Movel {
-private:
+protected:
     SDL_Texture* actualTexture;
     SDL_Texture* textureUpright;
     SDL_Texture* textureSprinting;
-
+    
     bool animate = false;
     float delayAnimate = 0.1f;
 public:

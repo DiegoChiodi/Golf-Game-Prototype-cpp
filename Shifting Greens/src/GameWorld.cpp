@@ -70,6 +70,11 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
                                 // Chama a ação de interação do objeto
                                 interactable->InteractAction();
                                 this->interactTimer = 0.0f; // Reinicia o temporizador de interação
+                                Ball* ball = dynamic_cast<Ball*>(interactable);
+                                if (ball)
+                                {
+                                    player->SetState(MovingState::IDLE);
+                                }
                             }
                         }
                     }
