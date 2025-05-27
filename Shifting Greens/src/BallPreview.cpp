@@ -6,12 +6,12 @@ BallPreview::BallPreview(float x, float y, float width, float height, SDL_Color 
 void BallPreview::Render(SDL_Renderer* renderer, const SDL_Rect& camera)
 {
     circleRGBA(
-    renderer,
-    static_cast<Sint16>(position.x - camera.x),
-    static_cast<Sint16>(position.y - camera.y),
-    static_cast<Sint16>(width * 10),
-    255, 255 , 255, 255
-);
+        renderer,
+        static_cast<Sint16>(position.x - camera.x),
+        static_cast<Sint16>(position.y - camera.y),
+        static_cast<Sint16>(width * 10),
+        255, 255 , 255, 255
+    );
 
     Movel::Render(renderer, camera);
 }

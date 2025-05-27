@@ -9,25 +9,32 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const
 {
     Square::Run(dt, stat, renderer, camera);
 
-    if (estage == Estage::PREVIEW) {
-        ballPreview->Run(dt, stat, renderer, camera);
-        if (stat[SDL_SCANCODE_SPACE]) {
+    switch (estage) {
+        case Estage::PREVIEW:
+            if (ballPreview != nullptr) {
+                ballPreview->Run(dt, stat, renderer, camera);
+            }
+            break;
+        case Estage::MOVING:
+                delete ballPreview;
+                ballPreview = nullptr;
             
-            // Inicia o movimento da bola 
-        }
+            break;
+        default:
+            break;
     }
-    
-    if (ballPreview != nullptr) {
-        ballPreview->Run(dt, stat, renderer, camera);
-    }
+    //std::cout << this->estage << std::endl;
 }
 
 void Ball::InteractAction() 
 {
+}
+
+void Ball::SetPreview() 
+{
     ballPreview = new BallPreview(position.x, position.y, width, height, {70, 0, 70 , 255}, {80, 80});
     estage = Estage::PREVIEW;
 }
-
 void Ball::Render(SDL_Renderer* renderer, const SDL_Rect& camera) 
 {
     RenderCollisor(renderer, camera);

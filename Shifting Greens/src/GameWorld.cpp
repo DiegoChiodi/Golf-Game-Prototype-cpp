@@ -17,15 +17,17 @@ GameWorld::GameWorld(SDL_Renderer* renderer, TextureManager* textureManager)
 
     // Crie a bola e o hold, armazene-os diretamente em objects
 
-    auto ball = std::make_unique<Ball>(
+    auto b = std::make_unique<Ball>(
         100, 100, 5, 5, SDL_Color{255, 255, 255, 255}, 20, 20, vector{0, 0}
     );
 
+    ball = b.get(); // Armazena o ponteiro da bola
+
     objects.push_back(std::make_unique<Hole>(
-        300, 300, 10, 10, SDL_Color{255, 0, 0, 255}, ball.get()
+        300, 300, 10, 10, SDL_Color{255, 0, 0, 255}, b.get()
     ));
 
-    objects.push_back(std::move(ball));
+    objects.push_back(std::move(b));
 
     
 }
@@ -66,6 +68,24 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
         }
     }
 
+    //BallPreview* ballPreview = dynamic_cast<BallPreview*>(viewTarget);
+
+    if (this->ball->GetEstage() == Ball::Estage::PREVIEW) {
+        if (InteractAction(stat) && this->interactTimer >= this->interactDelay) {
+            this->player->SetState(MovingState::IDLE_CENTRAL);
+            this->ball->SetEstage(Ball::Estage::MOVING);
+            this->viewTarget = this->player;
+            this->interactTimer = 0.0f; // Reinicia o temporizador de interação
+        }
+    }
+    /*if (ballPreview) {
+
+        if (InteractAction(stat) && this->interactTimer >= this->interactDelay) {
+            player->SetState(MovingState::SPRINTING);
+            viewTarget->GetOwner()->SetEstage(Ball::Estage::MOVING);
+        }
+    }*/
+    
     
     SDL_RenderPresent(renderer);
     
@@ -97,16 +117,15 @@ void GameWorld::Colliders(const float& dt, const Uint8* stat, GameObject* object
             if (player->CheckCollision(interactable->GetPositionColliser(),
                 interactable->GetInteractW(), interactable->GetInteractH())) 
             {
-                if (GameWorld::InteractAction(stat)) {
+                if (GameWorld::InteractAction(stat) && this->interactTimer >= this->interactDelay) {
                     // Chama a ação de interação do objeto
                     interactable->InteractAction();
                     this->interactTimer = 0.0f; // Reinicia o temporizador de interação
-                    Ball* ball = dynamic_cast<Ball*>(interactable);
-                    if (ball)
+                    if (this->ball && this->ball->GetEstage() == Ball::Estage::IDLE)
                     {
-                        player->SetState(MovingState::IDLE);
-                        viewTarget = ball->GetBallPreview();
-
+                        this->ball->SetPreview();
+                        this->player->SetState(MovingState::IDLE);
+                        viewTarget = this->ball->GetBallPreview();
                         Hole* hole = nullptr;
 
                         for (auto& hole : objects) {

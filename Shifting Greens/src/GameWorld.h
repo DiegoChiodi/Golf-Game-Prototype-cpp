@@ -20,6 +20,7 @@ private:
     TextureManager* textureManager;
     Camera camera;
     GameObject* viewTarget; // Ponto de destino da câmera
+    Ball* ball;
 public:
     GameWorld(SDL_Renderer* renderer, TextureManager* textureManager);
     ~GameWorld();
