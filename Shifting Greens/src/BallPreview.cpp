@@ -14,4 +14,5 @@ void BallPreview::Render(SDL_Renderer* renderer, const SDL_Rect& camera)
     );
 
     Movel::Render(renderer, camera);
+    
 }

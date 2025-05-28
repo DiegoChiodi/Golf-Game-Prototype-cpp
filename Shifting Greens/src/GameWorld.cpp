@@ -42,11 +42,12 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
 
     SDL_SetRenderDrawColor(renderer, BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
     SDL_RenderClear(renderer);
-
-    // Atualiza o temporizador de interação
-    if (this->interactTimer <= this->interactDelay) {
+    
+    if (interactTimer <= interactDelay)
+    {
+        // Atualiza o temporizador de interação
         this->interactTimer += dt;
-    }
+    } 
 
     this->camera.update(
         this->viewTarget->GetPosition().x, 
@@ -68,23 +69,16 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
         }
     }
 
-    //BallPreview* ballPreview = dynamic_cast<BallPreview*>(viewTarget);
-
-    if (this->ball->GetEstage() == Ball::Estage::PREVIEW) {
-        if (InteractAction(stat) && this->interactTimer >= this->interactDelay) {
-            this->player->SetState(MovingState::IDLE_CENTRAL);
-            this->ball->SetEstage(Ball::Estage::MOVING);
-            this->viewTarget = this->player;
-            this->interactTimer = 0.0f; // Reinicia o temporizador de interação
+    if (this->ball->GetEstage() == Ball::Estage::PREVIEW && this->interactTimer >= this->interactDelay) {
+        if (InteractAction(stat)) {
+        std::cout << "aaaa" << std::endl;
+        this->player->SetState(MovingState::IDLE_CENTRAL);
+        this->ball->SetEstage(Ball::Estage::MOVING);
+        this->viewTarget = this->player;
+        this->interactTimer = 0.0f;
         }
     }
-    /*if (ballPreview) {
 
-        if (InteractAction(stat) && this->interactTimer >= this->interactDelay) {
-            player->SetState(MovingState::SPRINTING);
-            viewTarget->GetOwner()->SetEstage(Ball::Estage::MOVING);
-        }
-    }*/
     
     
     SDL_RenderPresent(renderer);
@@ -109,7 +103,7 @@ void GameWorld::Colliders(const float& dt, const Uint8* stat, GameObject* object
 
         }
     }
-    if (player == square && square2 && this->interactDelay < this->interactTimer) 
+    if (player == square && square2 && this->interactDelay <= this->interactTimer) 
     {
         Interactable* interactable = dynamic_cast<Interactable*>(square2);
         if (interactable) {
@@ -120,9 +114,11 @@ void GameWorld::Colliders(const float& dt, const Uint8* stat, GameObject* object
                 if (GameWorld::InteractAction(stat) && this->interactTimer >= this->interactDelay) {
                     // Chama a ação de interação do objeto
                     interactable->InteractAction();
-                    this->interactTimer = 0.0f; // Reinicia o temporizador de interação
+                     // Reinicia o temporizador de interação
                     if (this->ball && this->ball->GetEstage() == Ball::Estage::IDLE)
                     {
+                        interactTimer = 0.0f;
+                        std::cout << "Putz" << std::endl;
                         this->ball->SetPreview();
                         this->player->SetState(MovingState::IDLE);
                         viewTarget = this->ball->GetBallPreview();
@@ -130,7 +126,7 @@ void GameWorld::Colliders(const float& dt, const Uint8* stat, GameObject* object
 
                         for (auto& hole : objects) {
                             Hole* h = dynamic_cast<Hole*>(hole.get());
-                            if (h && h->GetBall() == ball) {
+                            if (h && h->GetBall(    ) == ball) {
                                 point distance = {
                                     h->GetPosition().x + ball->GetPosition().x,
                                     h->GetPosition().y + ball->GetPosition().y
