@@ -69,15 +69,36 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
         }
     }
 
+    /*if (this->ball->GetEstage() == Ball::Estage::MOVING && viewTarget == this->ball->GetBallPreview()) {
+        this->viewTarget = this->ball;
+    }*/
+
+    //Se estou decidindo a direção da bola e aperto o espaço, a bola começa a se mover
     if (this->ball->GetEstage() == Ball::Estage::PREVIEW && this->interactTimer >= this->interactDelay) {
         if (InteractAction(stat)) {
-        std::cout << "aaaa" << std::endl;
-        this->player->SetState(MovingState::IDLE_CENTRAL);
-        this->ball->SetEstage(Ball::Estage::MOVING);
-        this->viewTarget = this->player;
-        this->interactTimer = 0.0f;
+            this->ball->SetEstage(Ball::Estage::MOVING);
+            this->viewTarget = this->ball;
+            this->interactTimer = 0.0f;
         }
     }
+    // Se a bola está em movimento e a velocidade é zero, ela volta para o estado idle
+    if (this->ball->GetEstage() == Ball::Estage::MOVING && this->ball->Stop() && this->interactTimer >= this->interactDelay) {
+        this->ball->SetEstage(Ball::Estage::IDLE);
+        this->player->SetState(MovingState::IDLE_CENTRAL);
+        this->viewTarget = this->player;
+        this->interactTimer = 0.0f;
+    }
+
+    /*
+    if (this->ball->GetEstage() == Ball::Estage::PREVIEW && this->interactTimer >= this->interactDelay) {
+        if (InteractAction(stat)) {
+            std::cout << "aaaa" << std::endl;
+            this->player->SetState(MovingState::IDLE_CENTRAL);
+            this->ball->SetEstage(Ball::Estage::MOVING);
+            this->viewTarget = this->player;
+            this->interactTimer = 0.0f;
+        }
+    }*/
 
     
     

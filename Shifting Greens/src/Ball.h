@@ -27,13 +27,21 @@ public:
     void SetEstage(Estage estageClaim) { this->estage = estageClaim; }
     void SetPreview ();
     //Fisic functions --------------------------------
-    vector calculateForce();
     void InitialImpulse();
     void BallMovement(const float& dt);
+    void SetBallPPosition() {  
+        if (ballPreview) {
+            ballPPosition = ballPreview->GetPosition();
+        }
+    }
+    bool Stop () const;
 protected:
     BallPreview* ballPreview = nullptr;
     vector speed; // Velocidade da bola
     Estage estage = Estage::IDLE;
     float atrito = 0.98f; // Fator de atrito para desacelerar a bola
     float zDimension = 0.0f; // Dimensão Z para simular profundidade
+    vector forca = {0.0f, 0.0f}; // Força aplicada na bola
+    float friction = 0.98f; // Fator de atrito para desacelerar a bola
+    vector ballPPosition; // Posição da bola para o preview
 };
