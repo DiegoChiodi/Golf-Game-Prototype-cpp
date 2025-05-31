@@ -24,7 +24,7 @@ GameWorld::GameWorld(SDL_Renderer* renderer, TextureManager* textureManager)
     ball = b.get(); // Armazena o ponteiro da bola
 
     objects.push_back(std::make_unique<Hole>(
-        300, 300, 10, 10, SDL_Color{255, 0, 0, 255}, b.get()
+        600, 200, 10, 10, SDL_Color{255, 0, 0, 255}, b.get()
     ));
 
     objects.push_back(std::move(b));
