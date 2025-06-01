@@ -5,51 +5,50 @@ Movel::Movel(float x, float y, float width, float height, SDL_Color color, vecto
 
 void Movel::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const SDL_Rect& camera) {
     Square::Run(dt, stat, renderer, camera);
-
-    if (movingState != MovingState::IDLE)
-    {
-        HandleEvents(stat, dt);
-    }
+    HandleEvents(stat, dt);
 }
 void Movel::HandleEvents(const Uint8* stat, const float& dt) {
-    movingState = MovingState::IDLE_CENTRAL;
+    if (movingState != MovingState::IDLE)
+    {
+        movingState = MovingState::IDLE_CENTRAL;
 
 
-    if (stat[SDL_SCANCODE_W]) {
-        if (position.y - speed.y * dt >= 0) {
-            position.y -= speed.y * dt;
-        } else {
-            position.y = 0;
+        if (stat[SDL_SCANCODE_W]) {
+            if (position.y - speed.y * dt >= 0) {
+                position.y -= speed.y * dt;
+            } else {
+                position.y = 0;
+            }
+            movingState = MovingState::SPRINTING;
         }
-        movingState = MovingState::SPRINTING;
-    }
-        
-    if (stat[SDL_SCANCODE_S]) {
-        if (position.y + speed.y * dt + height <= Global::MAP_HEIGHT) {
-            position.y += speed.y * dt;
-        } else {
-            position.y = Global::MAP_HEIGHT - height;
-        }
-        movingState = MovingState::SPRINTING;
-    }
 
-    if (stat[SDL_SCANCODE_A]) {
-        if (position.x - speed.x * dt >= 0) {
-            position.x -= speed.x * dt;
-        } else {
-            position.x = 0;
+        if (stat[SDL_SCANCODE_S]) {
+            if (position.y + speed.y * dt + height <= Global::MAP_HEIGHT) {
+                position.y += speed.y * dt;
+            } else {
+                position.y = Global::MAP_HEIGHT - height;
+            }
+            movingState = MovingState::SPRINTING;
         }
-        currentDirection = Direction::LEFT;
-        movingState = MovingState::SPRINTING;
-    }
 
-    if (stat[SDL_SCANCODE_D]) {
-        if (position.x + speed.x * dt + width <= Global::MAP_WIDTH) {
-            position.x += speed.x * dt;
-        } else {
-            position.x = Global::MAP_WIDTH - width;
+        if (stat[SDL_SCANCODE_A]) {
+            if (position.x - speed.x * dt >= 0) {
+                position.x -= speed.x * dt;
+            } else {
+                position.x = 0;
+            }
+            currentDirection = Direction::LEFT;
+            movingState = MovingState::SPRINTING;
         }
-        currentDirection = Direction::RIGHT;
-        movingState = MovingState::SPRINTING;
+
+        if (stat[SDL_SCANCODE_D]) {
+            if (position.x + speed.x * dt + width <= Global::MAP_WIDTH) {
+                position.x += speed.x * dt;
+            } else {
+                position.x = Global::MAP_WIDTH - width;
+            }
+            currentDirection = Direction::RIGHT;
+            movingState = MovingState::SPRINTING;
+        }
     }
-}
+}   

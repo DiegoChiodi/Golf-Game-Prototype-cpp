@@ -14,6 +14,22 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const
     switch (estage) {
         case Estage::PREVIEW:
             if (ballPreview != nullptr) {
+
+                distance = std::sqrt(
+                    (ballPPosition.x - position.x) * (ballPPosition.x - position.x) +
+                    (ballPPosition.y - position.y) * (ballPPosition.y - position.y)
+                ) / 5;
+
+
+                if (distance > 100.0f) {
+                    distance = 100.0f; // Limita a distância máxima do preview
+                } else if (distance < 20.0f) {
+                    distance = 20.0f; // Limita a distância mínima do preview
+                }
+                ballPreview->HandleEvents(stat, dt);
+                std::cout << "Distância: " << distance << std::endl;
+
+                ballPreview->SetWidthCircle(static_cast<int>(std::abs(distance)));   
                 ballPreview->Run(dt, stat, renderer, camera);
             }
             break;
@@ -33,7 +49,7 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const
 
 void Ball::SetPreview() 
 {
-    ballPreview = new BallPreview(position.x, position.y, width, height, {70, 0, 70 , 255}, {80, 80});
+    ballPreview = new BallPreview(position.x, position.y, width, height, {200, 0, 200 , 255}, {80, 80});
     estage = Estage::PREVIEW;
 }
 
@@ -117,7 +133,6 @@ void Ball::BallMovement(const float& dt) {
         this->speed.x *= this->groundFriction; // Aplica atrito no chão
         this->speed.y *= this->groundFriction; // Aplica atrito no chão
     }
-    std::cout << "Z: " << this->z << std::endl;
 
 }
 
