@@ -41,7 +41,7 @@ protected:
     Estage estage = Estage::IDLE;
     float zDimension = 0.0f; // Dimensão Z para simular profundidade
     vector forca = {0.0f, 0.0f}; // Força aplicada na bola
-    float friction = 0.96f; // Fator de atrito para desacelerar a bola
+    float friction = 0.98f; // Fator de atrito para desacelerar a bola
     vector ballPPosition; // Posição da bola para o preview
     //Váriaveis do z ---------------
     float z = 0.0f;
@@ -51,4 +51,6 @@ protected:
     float dy = ballPPosition.y - this->position.y / 2;
     vector distanceVector = {0.0f, 0.0f};
     float distance = 0.0f; // Distância entre a bola e o preview
+    const float gravity = 10.0f;
+    const float groundFriction = 0.95; // Fator de atrito do chão
 };

@@ -42,7 +42,7 @@ void Ball::Render(SDL_Renderer* renderer, const SDL_Rect& camera)
     //this->RenderCollisor(renderer, camera);
 
     // 1. Desenhar sombra (mesma posição x,y da bola, no chão)
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100); // sombra preta semi-transparente
+    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 100); // sombra preta semi-transparente
 
     // Calcula posição da sombra relativa à câmera
     SDL_Rect sombraRect;
@@ -87,21 +87,34 @@ void Ball::BallMovement(const float& dt) {
     this->position.x += this->speed.x * dt;
     this->position.y += this->speed.y * dt;
 
-    this->checkZ.x =  distance / 2.0f + distance; // Limite Z proporcional à distância
-    this->checkZ.y = (distance / 2.0f) + distance; // Limite Z proporcional à distância
-
-    if (this->position.x <= this->checkZ.x )
+    /*if (this->position.x < this->checkZ.x )
     {
         this->z += this->speedZ * dt; // Aumenta a altura Z
         std::cout << "Aumentando Z: " << this->z << std::endl;
     } else {
         this->z -= this->speedZ * dt; // Diminui a altura Z
         std::cout << "Diminuindo Z: " << this->z << std::endl;
+    }*/
+
+    // Aplica gravidade
+    this->speedZ -= this->gravity * 15 * dt; // A velocidade Z diminui com a gravidade
+    this->z += this->speedZ * dt; // Atualiza a altura Z
+
+    // Verifica se a bola toca o chão
+    if (this->z < 0.0f) {
+        this->speedZ *= -0.6f; // Z não pode ser negativo    
+        this->z = 0.0f; // Reseta Z para 0 quando toca o 
+        this->speed.x *= groundFriction; // Aplica atrito horizontal
+        this->speed.y *= groundFriction;
     }
 
-    if (this->z < 0.0f) {
-        this->z = 0.0f; // Garante que a altura Z não fique negativa
+    if (this->z == 0.0f)
+    {
+        this->speed.x *= this->groundFriction; // Aplica atrito no chão
+        this->speed.y *= this->groundFriction; // Aplica atrito no chão
     }
+    std::cout << "Z: " << this->z << std::endl;
+
 }
 
 
@@ -112,10 +125,13 @@ void Ball::InitialImpulse() {
 
     // Distância entre bola e preview
     distance = std::sqrt(distanceVector.x * distanceVector.x + distanceVector.y * distanceVector.y);
+    
+    this->checkZ.x =  distance / 3.0f + distance; // Limite Z proporcional à distância
+    this->checkZ.y = (distance / 3.0f) + distance; // Limite Z proporcional à distância
 
     // Evitar divisão por zero
     if (distance == 0.0f) return;
-
+    
     // Limitar a distância máxima (força máxima)
     float distanciaMax = 220.0f;
     if (distance > distanciaMax) distance = distanciaMax;
@@ -135,7 +151,7 @@ void Ball::InitialImpulse() {
     this->speed.y = this->forca.y;
 
     // ---- Velocidade vertical (Z) proporcional à força total
-    this->speedZ = 200;//(forcaFinal / 150.0f) * 10.0f; // altura proporcional à força (ajuste o 250 se quiser)
+    this->speedZ = forcaFinal * 0.625f;
 }
 
 bool Ball::Stop() const
