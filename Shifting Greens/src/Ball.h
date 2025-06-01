@@ -35,6 +35,10 @@ public:
         }
     }
     bool Stop () const;
+    bool SetZ (float zClaim) { 
+        this->z = zClaim; 
+        return true; 
+    }
 protected:
     BallPreview* ballPreview = nullptr;
     vector speed; // Velocidade da bola

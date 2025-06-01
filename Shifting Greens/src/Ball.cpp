@@ -108,6 +108,10 @@ void Ball::BallMovement(const float& dt) {
         this->speed.y *= groundFriction;
     }
 
+    if (this->speed.x < 8.0f && this->speed.x > -8.0f && this->speed.y < 8.0f && this->speed.y > -8.0f) {
+        this->speedZ *= 0.98f; // Reduz a velocidade Z quando a bola está quase parada
+    }
+
     if (this->z == 0.0f)
     {
         this->speed.x *= this->groundFriction; // Aplica atrito no chão

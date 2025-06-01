@@ -84,6 +84,7 @@ void GameWorld::Run(const float& dt ,const Uint8* stat)
     // Se a bola está em movimento e a velocidade é zero, ela volta para o estado idle
     if (this->ball->GetEstage() == Ball::Estage::MOVING && this->ball->Stop() && this->interactTimer >= this->interactDelay) {
         this->ball->SetEstage(Ball::Estage::IDLE);
+        this->ball->SetZ(0.0f); // Reseta a altura Z da bola
         this->player->SetState(MovingState::IDLE_CENTRAL);
         this->viewTarget = this->player;
         this->interactTimer = 0.0f;
