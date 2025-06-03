@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include <algorithm>
 
 Ball::Ball(float x, float y, float width, float height, SDL_Color color, 
            float wInteract, float hInteract, vector speed)
@@ -18,15 +19,10 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const
                 distance = std::sqrt(
                     (ballPPosition.x - position.x) * (ballPPosition.x - position.x) +
                     (ballPPosition.y - position.y) * (ballPPosition.y - position.y)
-                ) / 5;
-
-
-                if (distance > 100.0f) {
-                    distance = 100.0f; // Limita a distância máxima do preview
-                } else if (distance < 20.0f) {
-                    distance = 20.0f; // Limita a distância mínima do preview
-                }
+                    ) / 5;
+                    
                 ballPreview->HandleEvents(stat, dt);
+                
                 std::cout << "Distância: " << distance << std::endl;
 
                 ballPreview->SetWidthCircle(static_cast<int>(std::abs(distance)));   
@@ -51,6 +47,10 @@ void Ball::SetPreview()
 {
     ballPreview = new BallPreview(position.x, position.y, width, height, {200, 0, 200 , 255}, {80, 80});
     estage = Estage::PREVIEW;
+    distance = std::sqrt(
+        (ballPPosition.x - position.x) * (ballPPosition.x - position.x) +
+        (ballPPosition.y - position.y) * (ballPPosition.y - position.y)
+    ) / 5;
 }
 
 void Ball::Render(SDL_Renderer* renderer, const SDL_Rect& camera) 
