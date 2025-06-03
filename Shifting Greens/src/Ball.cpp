@@ -25,8 +25,6 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const
 
                 ballPreview->HandleEvents(stat, dt);
                 
-                std::cout << "Distância: " << distance << std::endl;
-
                 ballPreview->SetWidthCircle(static_cast<int>(std::abs(distance)));   
                 ballPreview->Run(dt, stat, renderer, camera);
             }

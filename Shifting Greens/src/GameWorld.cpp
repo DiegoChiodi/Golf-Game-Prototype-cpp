@@ -120,9 +120,11 @@ void GameWorld::Colliders(const float& dt, const Uint8* stat, GameObject* object
                     
     if (square && square2) {
         Ball* ball = dynamic_cast<Ball*>(square);
+        Hole* hole = dynamic_cast<Hole*>(square2);
 
-        if (square->CheckCollision(square2->GetPosition(), square2->GetWidth(), square2->GetHeight())) {
-
+        if (ball && hole && ball->CheckCollision(hole->GetPosition(), hole->GetWidth(), hole->GetHeight()) && ball->GetEstage() == Ball::Estage::IDLE)
+        {
+            std::cout << "Bola caiu no buraco!" << std::endl;
         }
     }
     if (player == square && square2 && this->interactDelay <= this->interactTimer) 
@@ -140,7 +142,6 @@ void GameWorld::Colliders(const float& dt, const Uint8* stat, GameObject* object
                     if (this->ball && this->ball->GetEstage() == Ball::Estage::IDLE)
                     {
                         interactTimer = 0.0f;
-                        std::cout << "Putz" << std::endl;
                         this->ball->SetPreview();
                         this->player->SetState(MovingState::IDLE);
                         viewTarget = this->ball->GetBallPreview();
