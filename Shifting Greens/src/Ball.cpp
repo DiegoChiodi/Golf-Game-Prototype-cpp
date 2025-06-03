@@ -20,7 +20,9 @@ void Ball::Run(const float& dt, const Uint8* stat, SDL_Renderer* renderer, const
                     (ballPPosition.x - position.x) * (ballPPosition.x - position.x) +
                     (ballPPosition.y - position.y) * (ballPPosition.y - position.y)
                     ) / 5;
-                    
+
+                distance = std::clamp(distance, 20.0f, 100.0f); // Limita a distância entre 0 e 220
+
                 ballPreview->HandleEvents(stat, dt);
                 
                 std::cout << "Distância: " << distance << std::endl;

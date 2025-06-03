@@ -100,6 +100,13 @@ void GameManager::Run() {
                     case SDLK_RETURN:
                         Mix_PlayChannel(-1, holeSound, 0);
                         break;
+                    case SDLK_r:
+                        // Reinicializar o GameWorld
+                        std::cout << "Reinicializando o GameWorld...\n";
+                        gameWorld = std::make_unique<GameWorld>(renderer, &textureManager);
+                        previousTime = SDL_GetTicks();
+                        dt = 0.0f;
+                        break;
                     default:
                         break;
                 }
