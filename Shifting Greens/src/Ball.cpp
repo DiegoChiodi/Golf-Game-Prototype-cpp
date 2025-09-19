@@ -78,7 +78,6 @@ void Ball::Render(SDL_Renderer* renderer, const SDL_Rect& camera)
     // 2. Desenhar a bola com cor normal, mas deslocada para cima pela altura Z (height)
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
-    
     SDL_RenderFillRect(renderer, &ballRect);
 }
 
@@ -103,15 +102,6 @@ void Ball::BallMovement(const float& dt) {
     this->position.x += this->speed.x * dt;
     this->position.y += this->speed.y * dt;
 
-    /*if (this->position.x < this->checkZ.x )
-    {
-        this->z += this->speedZ * dt; // Aumenta a altura Z
-        std::cout << "Aumentando Z: " << this->z << std::endl;
-    } else {
-        this->z -= this->speedZ * dt; // Diminui a altura Z
-        std::cout << "Diminuindo Z: " << this->z << std::endl;
-    }*/
-
     // Aplica gravidade
     this->speedZ -= this->gravity * 15 * dt; // A velocidade Z diminui com a gravidade
     this->z += this->speedZ * dt; // Atualiza a altura Z
@@ -124,14 +114,8 @@ void Ball::BallMovement(const float& dt) {
         this->speed.y *= groundFriction;
     }
 
-    if (this->speed.x < 8.0f && this->speed.x > -8.0f && this->speed.y < 8.0f && this->speed.y > -8.0f) {
+    if (this->speed.x < std::abs(8.0f) && this->speed.y < std::abs(8.0f)) {
         this->speedZ *= 0.98f; // Reduz a velocidade Z quando a bola está quase parada
-    }
-
-    if (this->z == 0.0f)
-    {
-        this->speed.x *= this->groundFriction; // Aplica atrito no chão
-        this->speed.y *= this->groundFriction; // Aplica atrito no chão
     }
 
 }
@@ -144,16 +128,14 @@ void Ball::InitialImpulse() {
 
     // Distância entre bola e preview
     distance = std::sqrt(distanceVector.x * distanceVector.x + distanceVector.y * distanceVector.y);
-    
-    this->checkZ.x =  distance / 3.0f + distance; // Limite Z proporcional à distância
-    this->checkZ.y = (distance / 3.0f) + distance; // Limite Z proporcional à distância
 
     // Evitar divisão por zero
     if (distance == 0.0f) return;
     
     // Limitar a distância máxima (força máxima)
-    float distanciaMax = 220.0f;
+    constexpr float distanciaMax = 220.0f;
     if (distance > distanciaMax) distance = distanciaMax;
+
     // Normalizar direção usando vector
     vector dir = { distanceVector.x / distance,
          distanceVector.y / distance };

@@ -15,3 +15,10 @@ void GolfCartMoviment::HandleEvents(const Uint8* stat, const float& dt)
 {
     
 }
+
+vector GolfCartMoviment::Mover(float anguloGraus, vector speed, const float& dt) {
+    float anguloRad = anguloGraus * (M_PI / 180.0f);
+    float dx = cos(anguloRad) * speed.x * dt;
+    float dy = sin(anguloRad) * speed.y * dt;       
+    return {dx, dy};
+}
